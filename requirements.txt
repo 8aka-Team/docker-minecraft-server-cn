@@ -1,0 +1,10 @@
+mkdocs
+mkdocs-material
+mkdocs-material-extensions
+mkdocs-minify-plugin
+mdx-gh-links
+mkdocs-click
+mkdocs-autorefs
+mkdocstrings
+mkdocs-static-i18n
+mkdocs-literate-nav
