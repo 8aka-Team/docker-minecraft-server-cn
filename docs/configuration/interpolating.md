@@ -1,5 +1,5 @@
 ---
-title: Modifying config files
+title: 修改配置文件
 ---
 
 ## Replacing variables inside configs

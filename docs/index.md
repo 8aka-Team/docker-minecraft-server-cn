@@ -1,45 +1,34 @@
-# Intro
+# 介绍
+这个 Docker 镜像提供了一个 Minecraft 服务器，它会在启动时自动下载最新稳定版本。你也可以运行或升级到任何特定版本或最新的快照。有关更多信息，请参阅下面的 _版本_ 部分。
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/itzg/minecraft-server.svg)](https://hub.docker.com/r/itzg/minecraft-server/)
-[![Docker Stars](https://img.shields.io/docker/stars/itzg/minecraft-server.svg?maxAge=2592000)](https://hub.docker.com/r/itzg/minecraft-server/)
-[![GitHub Issues](https://img.shields.io/github/issues-raw/itzg/docker-minecraft-server.svg)](https://github.com/itzg/docker-minecraft-server/issues)
-[![Discord](https://img.shields.io/discord/660567679458869252?label=Discord&logo=discord)](https://discord.gg/DXfKpjB)
-[![Build and Publish](https://github.com/itzg/docker-minecraft-server/workflows/Build%20and%20Publish/badge.svg)](https://github.com/itzg/docker-minecraft-server/actions)
-[![](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-orange.svg)](https://www.buymeacoffee.com/itzg)
-
-This docker image provides a Minecraft Server that will automatically download the latest stable
-version at startup. You can also run/upgrade to any specific version or the
-latest snapshot. See the _Versions_ section below for more information.
-
-To simply use the latest stable version, run
+要简单地使用最新稳定版本，运行：
 
     docker run -d -it -p 25565:25565 -e EULA=TRUE itzg/minecraft-server
 
-where, in this case, the standard server port 25565, will be exposed on your host machine.
+在这种情况下，标准服务器端口 25565 将在你的主机上暴露 。
 
 !!! note
 
-    If you plan on running a server for a longer amount of time it is highly recommended using a management layer such as [Docker Compose](#using-docker-compose) or [Kubernetes](#deployment-templates-and-examples) to allow for incremental reconfiguration and image upgrades.
+    如果你计划运行一个长期的服务器，强烈建议使用管理层，如 [Docker Compose](#使用-docker-compose) 或 [Kubernetes](#部署模板和示例)，以允许增量重新配置和镜像升级。
 
-!!! info 
+!!! info
 
-    Be sure to always include `-e EULA=TRUE` in your commands and container definitions, as Mojang/Microsoft requires EULA acceptance.
+    请务必始终在你的命令和容器定义中包含 `-e EULA=TRUE`，因为 Mojang/Microsoft 要求接受 EULA。
 
-!!! warning 
+!!! 警告
 
-    **DO NOT** port forward RCON on 25575 without first setting `RCON_PASSWORD` to a secure value. It is highly recommended to only use RCON within the container, such as with `rcon-cli`. 
+    **不要** 在 25575 端口上转发 RCON，除非你首先将 `RCON_PASSWORD` 设置为安全值。强烈建议仅在容器内使用 RCON，例如使用 `rcon-cli`。
 
-By default, the container will download the latest version of the "vanilla" [Minecraft: Java Edition server](https://www.minecraft.net/en-us/download/server) provided by Mojang. The [`VERSION`](versions/java.md) and the [`TYPE`](types-and-platforms/index.md) can be configured to create many variations of desired Minecraft server. 
+默认情况下，容器将下载由 Mojang 提供的最新版本的 "原版" [Minecraft: Java 版服务器](https://www.minecraft.net/en-us/download/server)。可以通过配置 [`VERSION`](versions/java.md) 和 [`TYPE`](types-and-platforms/index.md) 来创建多种所需的 Minecraft 服务器。
 
-## Using [Docker Compose](https://docs.docker.com/compose/)
+## 使用 [Docker Compose](https://docs.docker.com/compose/)
 
-1. Create a new directory
-2. Put the contents of the file below in a file called `docker-compose.yml`
-3. Run `docker compose up -d` in that directory
-4. Done! Point your client at your host's name/IP address and port 25565.
+1. 创建一个新目录
+2. 将以下文件内容放入一个名为 `docker-compose.yml` 的文件中
+3. 在该目录中运行 `docker compose up -d`
+4. 完成！将你的客户端指向你的主机名/IP 地址和端口 25565。
 
 ```yaml
-
 services:
   mc:
     image: itzg/minecraft-server
@@ -50,16 +39,18 @@ services:
     environment:
       EULA: "TRUE"
     volumes:
-      # attach the relative directory 'data' to the container's /data path
+      # 将相对目录 'data' 挂载到容器的 /data 路径
       - ./data:/data
 ```
 
-To apply changes made to the compose file, just run `docker compose up -d` again.
+要应用对 compose 文件所做的更改，只需再次运行 `docker compose up -d`。
 
-Follow the logs of the container using `docker compose logs -f`, check on the status with `docker compose ps`, and stop the container using `docker compose stop`.
+使用 `docker compose logs -f` 查看容器的日志，使用 `docker compose ps` 检查状态，并使用 `docker compose stop` 停止容器。
 
-!!! note "More Compose Examples"
-    There are more [examples located in the Github repo](https://github.com/itzg/docker-minecraft-server/tree/master/examples).
+!!! note "更多 Compose 示例"
 
-!!! note "Deployment Examples"
-    The [deployments page](misc/deployment/index.md) provides more examples of deployment with and beyond Docker Compose.
+    更多 [示例位于 Github 仓库中](https://github.com/itzg/docker-minecraft-server/tree/master/examples)。
+
+!!! note "部署示例"
+
+    [部署页面](misc/deployment/index.md) 提供了更多使用 Docker Compose 及以外的部署示例。

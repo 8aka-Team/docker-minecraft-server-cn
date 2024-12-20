@@ -1,525 +1,630 @@
+---
+title: 环境变量
+---
 
-!!! warning
 
-    The variables listed on this page are manually documented and may be out-of-date or inaccurate. 
+!!! 警告
 
-    All other documentation pages are actively maintained, so please use the search box above to find the desired topic.
+    本页列出的变量是手动记录的，可能已过时或不准确。
 
-### General options
+    所有其他文档页面都处于积极维护状态，因此请使用上方的搜索框查找所需主题。
+
+### 通用选项
+
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>UID</code></td>
-            <td>The linux user id to run as</td>
+            <td>运行的Linux用户ID</td>
             <td><code>1000</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>GID</code></td>
-            <td>The linux group id to run as</td>
+            <td>运行的Linux组ID</td>
             <td><code>1000</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>MEMORY</code></td>
-            <td>The image declares an initial and maximum Java memory-heap limit of 1 GB.</td>
+            <td>镜像声明了初始和最大Java内存堆限制为1 GB。</td>
             <td><code>1G</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>INIT_MEMORY</code></td>
-            <td>Independently sets the initial heap size</td>
+            <td>独立设置初始堆大小</td>
             <td><code>1G</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>MAX_MEMORY</code></td>
-            <td>independently sets the max heap size</td>
+            <td>独立设置最大堆大小</td>
             <td><code>1G</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>TZ</code></td>
-            <td>You can configure the timezone to match yours by setting the TZ environment variable.  
+            <td>您可以通过设置TZ环境变量来配置与您匹配的时区。
 
-alternatively, you can mount: <code>/etc/localtime:/etc/localtime:ro
+或者，您可以挂载：<code>/etc/localtime:/etc/localtime:ro
 
 /etc/timezone:/etc/timezone:ro</code>
-            </td>
-            <td><code>UTC</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENABLE_ROLLING_LOGS</code></td>
-            <td>By default the vanilla log file will grow without limit. The logger can be reconfigured to use a rolling log files strategy by setting this to <code>true</code></td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENABLE_JMX</code></td>
-            <td>To enable remote JMX, such as for profiling with VisualVM or JMC, add the environment variable ENABLE_JMX=true</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>JMX_HOST</code></td>
-            <td>If JMX is enabled, set JMX_HOST to the IP/host running the Docker container, and add a port forwarding of TCP port 7091</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>USE_AIKAR_FLAGS</code></td>
-            <td><a href="https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/">Aikar has done some research</a> into finding the optimal JVM flags for GC tuning, which becomes more important as more users are connected concurrently</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>JVM_OPTS</code></td>
-            <td>General JVM options can be passed to the Minecraft Server invocation by passing a <code>JVM_OPTS</code> environment variable. The JVM requires -XX options to precede -X options, so those can be declared in <code>JVM_XX_OPTS</code>. Both variables are space-delimited, raw JVM arguments</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>JVM_XX_OPTS</code></td>
-            <td>General JVM options can be passed to the Minecraft Server invocation by passing a <code>JVM_OPTS</code> environment variable. The JVM requires -XX options to precede -X options, so those can be declared in <code>JVM_XX_OPTS</code>. Both variables are space-delimited, raw JVM arguments</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>JVM_DD_OPTS</code></td>
-            <td>As a shorthand for passing several system properties as -D arguments, you can instead pass a comma separated list of name=value or name:value pairs with JVM_DD_OPTS. (The colon syntax is provided for management platforms like Plesk that don't allow = inside a value.)</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>EXTRA_ARGS</code></td>
-            <td>Arguments that would usually be passed to the jar file (those which are written after the filename)</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>LOG_TIMESTAMP </code></td>
-            <td>To include the timestamp with each log set to <code>true</code></td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-    </tbody>
+</td>
+<td><code>UTC</code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>ENABLE_ROLLING_LOGS</code></td>
+<td>默认情况下，原版日志文件将无限增长。可以通过将此设置为<code>true</code>来重新配置记录器以使用滚动日志文件策略</td>
+<td><code>false</code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>ENABLE_JMX</code></td>
+<td>要启用远程JMX，例如用于使用VisualVM或JMC进行分析，请添加环境变量ENABLE_JMX=true</td>
+<td><code>false</code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>JMX_HOST</code></td>
+<td>如果启用了JMX，请将JMX_HOST设置为运行Docker容器的IP/主机，并添加TCP端口7091的端口转发</td>
+<td><code></code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>USE_AIKAR_FLAGS</code></td>
+<td><a href="https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/">
+Aikar进行了一些研究</a>，以找到GC调优的最佳JVM标志，这在更多用户同时连接时变得更为重要</td>
+<td><code>false</code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>JVM_OPTS</code></td>
+<td>可以通过传递<code>JVM_OPTS</code>
+环境变量将通用JVM选项传递给Minecraft服务器调用。JVM要求-XX选项在-X选项之前，因此可以在<code>JVM_XX_OPTS</code>
+中声明这些选项。这两个变量都是以空格分隔的原始JVM参数</td>
+<td><code></code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>JVM_XX_OPTS</code></td>
+<td>可以通过传递<code>JVM_OPTS</code>
+环境变量将通用JVM选项传递给Minecraft服务器调用。JVM要求-XX选项在-X选项之前，因此可以在<code>JVM_XX_OPTS</code>
+中声明这些选项。这两个变量都是以空格分隔的原始JVM参数</td>
+<td><code></code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>JVM_DD_OPTS</code></td>
+<td>作为传递多个系统属性作为-D参数的简写，您可以改为传递以逗号分隔的name=value或name:
+value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语法，这些平台不允许在值内使用=）</td>
+<td><code></code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>EXTRA_ARGS</code></td>
+<td>通常传递给jar文件的参数（写在文件名之后的那些）</td>
+<td><code></code></td>
+<td>⬜️</td>
+</tr>
+<tr>
+<td><code>LOG_TIMESTAMP </code></td>
+<td>要在每个日志中包含时间戳，请设置为<code>true</code></td>
+<td><code>false</code></td>
+<td>⬜️</td>
+</tr>
+</tbody>
 </table>
 
-### Server
+### 服务器
+
+<table>
+	<thead>
+		<tr>
+			<th>名称</th>
+			<th>描述</th>
+			<th>默认值</th>
+			<th>是否必需</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<code>TYPE</code>
+			</td>
+			<td>服务器<a href="../types-and-platforms/">类型</a>
+			</td>
+			<td>
+				<code>VANILLA</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>EULA</code>
+			</td>
+			<td>你必须将此设置为<code>true</code>
+			</td>
+			<td>
+				<code>&nbsp;</code>
+			</td>
+			<td>✅</td>
+		</tr>
+		<tr>
+			<td>
+				<code>VERSION</code>
+			</td>
+			<td>Minecraft版本</td>
+			<td>
+				<code>LATEST</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>MOTD</code>
+			</td>
+			<td>设置服务器登录消息。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>DIFFICULTY</code>
+			</td>
+			<td>难度级别。可用值：<code>peaceful</code>、<code>easy</code>、<code>normal</code>、<code>hard</code>
+			</td>
+			<td>
+				<code>easy</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>ICON</code>
+			</td>
+			<td>用于服务器的图标图像的URL或文件路径。它将被下载、缩放并转换为适当的格式。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>OVERRIDE_ICON</code>
+			</td>
+			<td>已设置的服务器图标默认不会被覆盖。将此设置为<code>TRUE</code>以覆盖图标。</td>
+			<td>
+				<code>FALSE</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>MAX_PLAYERS</code>
+			</td>
+			<td>可以加入服务器的最大玩家数量。</td>
+			<td>
+				<code>20</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>MAX_WORLD_SIZE</code>
+			</td>
+			<td>以半径表示的最大可能大小（以块为单位）。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>ALLOW_NETHER</code>
+			</td>
+			<td>允许玩家前往下界。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>ANNOUNCE_PLAYER_ACHIEVEMENTS</code>
+			</td>
+			<td>允许服务器在玩家获得成就时进行公告。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>ENABLE_COMMAND_BLOCK</code>
+			</td>
+			<td>启用命令方块。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>FORCE_GAMEMODE</code>
+			</td>
+			<td>强制玩家以默认游戏模式加入。</td>
+			<td>
+				<code>false</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>GENERATE_STRUCTURES</code>
+			</td>
+			<td>定义是否生成结构（如村庄）。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>HARDCORE</code>
+			</td>
+			<td>如果设置为<code>true</code>，玩家死亡后将被设置为旁观者模式。</td>
+			<td>
+				<code>false</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SNOOPER_ENABLED</code>
+			</td>
+			<td>如果设置为false，服务器将不会向snoop.minecraft.net服务器发送数据。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>MAX_BUILD_HEIGHT</code>
+			</td>
+			<td>允许建造的最大高度。地形仍可能在较低的高度限制之上自然生成。</td>
+			<td>
+				<code>256</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SPAWN_ANIMALS</code>
+			</td>
+			<td>确定动物是否能够生成。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SPAWN_MONSTERS</code>
+			</td>
+			<td>确定怪物是否会被生成。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SPAWN_NPCS</code>
+			</td>
+			<td>确定村民是否会被生成。</td>
+			<td>
+				<code>true</code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SPAWN_PROTECTION</code>
+			</td>
+			<td>设置非OP无法编辑的区域（0表示禁用）。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>VIEW_DISTANCE</code>
+			</td>
+			<td>设置服务器发送给客户端的世界数据量，以玩家周围的区块数（半径，非直径）为单位。它决定了服务器端视距。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+		<tr>
+			<td>
+				<code>SEED</code>
+			</td>
+			<td>设置创建Minecraft世界的种子。如果使用负数，请确保将其用引号括起来。</td>
+			<td>
+				<code></code>
+			</td>
+			<td>⬜️</td>
+		</tr>
+<tr>
+    <td><code>MODE</code></td>
+    <td>Minecraft服务器默认配置为生存模式运行。你可以使用MODE来更改模式，可以选择提供<a href="http://minecraft.wiki/Game_mode#Game_modes">标准数值</a>或快捷值：<br />
+    <ul>
+        <li>creative (创造模式)</li>
+        <li>survival (生存模式)</li>
+        <li>adventure (冒险模式)</li>
+        <li>spectator (旁观者模式)（Minecraft 1.8或更高版本）</li>
+    </ul></td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>PVP</code></td>
+    <td>默认情况下，服务器创建时启用了 PVP 模式。</td>
+    <td><code>true</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>LEVEL_TYPE</code></td>
+    <td>默认情况下，会生成一个包含山丘、山谷、水等的标准世界。可以通过将LEVEL_TYPE设置为<a href="https://minecraft.wiki/w/Server.properties#level-type">此处列出的预期类型</a>来配置不同的世界类型。</td>
+    <td><code>minecraft:default</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>GENERATOR_SETTINGS</code></td>
+    <td>对于某些世界类型，可以使用<code>GENERATOR_SETTINGS</code>进一步自定义世界生成，<a href="https://minecraft.wiki/w/Server.properties#generator-settings">如这里所述</a>。</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>LEVEL</code></td>
+    <td>你可以通过使用LEVEL选项在不同的世界存档之间切换，或者使用不同的存档运行多个容器。</td>
+    <td><code>world</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>ONLINE_MODE</code></td>
+    <td>默认情况下，服务器会检查连接的玩家是否在Minecraft的账户数据库中。如果你想创建一个离线服务器，或者你的服务器没有连接到互联网，你可以禁用服务器尝试连接到minecraft.net来验证玩家。</td>
+    <td><code>true</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>ALLOW_FLIGHT</code></td>
+    <td>允许用户在生存模式下使用飞行功能，前提是他们安装了提供飞行功能的模组。</td>
+    <td><code>FALSE</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>SERVER_NAME</code></td>
+    <td>服务器名称</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>SERVER_PORT</code></td>
+    <td>只有在你知道自己在做什么的情况下才更改此值。只有在使用主机网络时才需要此值，而主机网络很少使用。</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>PLAYER_IDLE_TIMEOUT</code></td>
+    <td>玩家空闲超时</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>ENABLE_JMX</code></td>
+    <td>启用JMX监控</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>SYNC_CHUNK_WRITES</code></td>
+    <td>同步区块写入</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>ENABLE_STATUS</code></td>
+    <td>启用状态</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>ENTITY_BROADCAST_RANGE_PERCENTAGE</code></td>
+    <td>实体广播范围百分比</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>FUNCTION_PERMISSION_LEVEL</code></td>
+    <td>数据包权限级别</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>NETWORK_COMPRESSION_THRESHOLD</code></td>
+    <td>网络压缩阈值</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>OP_PERMISSION_LEVEL</code></td>
+    <td>OP权限级别</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>PREVENT_PROXY_CONNECTIONS</code></td>
+    <td>防止代理连接</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>USE_NATIVE_TRANSPORT</code></td>
+    <td>使用 Native 传输</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>SIMULATION_DISTANCE</code></td>
+    <td>模拟距离</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>EXEC_DIRECTLY</code></td>
+    <td>如果你想使用颜色和交互功能将Docker附加到Minecraft服务器控制台，请设置为<code>true</code>。</td>
+    <td><code>false</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>STOP_SERVER_ANNOUNCE_DELAY</code></td>
+    <td>为了在服务器关闭时给玩家时间完成他们的操作，可以将<code>STOP_SERVER_ANNOUNCE_DELAY</code>设置为服务器发布公告后的延迟秒数。</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>PROXY</code></td>
+    <td>你可以通过传递代理的URL来配置使用HTTP/HTTPS代理。</td>
+    <td><code>false</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>CONSOLE</code></td>
+    <td>一些较旧的Spigot版本（1.14之前）在分离stdin时需要传递<code>--noconsole</code>。</td>
+    <td><code>TRUE</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>GUI</code></td>
+    <td>一些较旧的服务器会混淆并认为GUI界面已启用。</td>
+    <td><code>TRUE</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>STOP_DURATION</code></td>
+    <td>当容器收到停止信号时，Minecraft进程包装器将尝试通过RCON或控制台发送“停止”命令，并等待进程优雅结束。</td>
+    <td><code>60</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>SETUP_ONLY</code></td>
+    <td>如果你使用的是主机附加的数据目录，那么你可以通过将此设置为<code>true</code>来让镜像设置Minecraft服务器文件并在启动服务器进程之前停止。</td>
+    <td><code>false</code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>USE_FLARE_FLAGS</code></td>
+    <td>启用支持<a href="https://blog.airplane.gg/flare">Flare分析套件</a>所需的JVM标志。</td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr>
+<tr>
+    <td><code>USE_SIMD_FLAGS</code></td>
+    <td>支持优化的SIMD操作</td>
+    <td><code>false</code></td>
+    <td>⬜️</td>
+</tr>
+<!-- <tr>
+    <td><code></code></td>
+    <td></td>
+    <td><code></code></td>
+    <td>⬜️</td>
+</tr> -->
+</tbody>
+</table>
+
+### 自定义资源包
 
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>TYPE</code></td>
-            <td>The server <a href="../types-and-platforms/">type</a></td>
-            <td><code>VANILLA</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>EULA</code></td>
-            <td>You <strong>MUST</strong> set this to <code>true</code></td>
-            <td><code>&nbsp;</code></td>
-            <td>✅</td>
-        </tr>
-        <tr>
-            <td><code>VERSION</code></td>
-            <td>The minecraft version</td>
-            <td><code>LATEST</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>MOTD</code></td>
-            <td>Set the server log in message.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>DIFFICULTY</code></td>
-            <td>The difficulty level. Available values: <code>peaceful</code>,<code>easy</code>,<code>normal</code>,<code>hard</code></td>
-            <td><code>easy</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ICON</code></td>
-            <td>The url or file path for the icon image to use for the server. It will be downloaded, scaled, and converted to the proper format.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>OVERRIDE_ICON</code></td>
-            <td>The server icon which has been set doesn't get overridden by default. Set this to <code>TRUE</code> to override the icon</td>
-            <td><code>FALSE</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>MAX_PLAYERS</code></td>
-            <td>The maximum number of players that can join the server.</td>
-            <td><code>20</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>MAX_WORLD_SIZE</code></td>
-            <td>The maximum possible size in blocks, expressed as a radius.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ALLOW_NETHER</code></td>
-            <td>Allows players to travel to the Nether</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ANNOUNCE_PLAYER_ACHIEVEMENTS</code></td>
-            <td>Allows server to announce when a player gets an achievement.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENABLE_COMMAND_BLOCK</code></td>
-            <td>Enables the command blocks.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>FORCE_GAMEMODE</code></td>
-            <td>Force players to join in the default game mode.</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>GENERATE_STRUCTURES</code></td>
-            <td>Defines whether structures (such as villages) will be generated.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>HARDCORE</code></td>
-            <td>If set to <code>true</code>, players will be set to spectator mode if they die.</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SNOOPER_ENABLED</code></td>
-            <td>If set to false, the server will not send data to snoop.minecraft.net server.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>MAX_BUILD_HEIGHT</code></td>
-            <td>The maximum height in which building is allowed. Terrain may still naturally generate above a low height limit.</td>
-            <td><code>256</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SPAWN_ANIMALS</code></td>
-            <td>Determines if animals will be able to spawn.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SPAWN_MONSTERS</code></td>
-            <td>Determines if monsters will be spawned.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SPAWN_NPCS</code></td>
-            <td>Determines if villagers will be spawned.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SPAWN_PROTECTION</code></td>
-            <td>Sets the area that non-ops can not edit (0 to disable)</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>VIEW_DISTANCE</code></td>
-            <td>Sets the amount of world data the server sends the client, measured in chunks in each direction of the player (radius, not diameter). It determines the server-side viewing distance.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SEED</code></td>
-            <td>Sets the seed to create the Minecraft world. If you use a negative number, make sure that it is in quotes.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>MODE</code></td>
-            <td>Minecraft servers are configured to run in Survival mode by default. You can change the mode using MODE where you can either provide the <a href="http://minecraft.wiki/Game_mode#Game_modes">standard numerical values</a> or the shortcut values:<br />
-            <ul>
-                <li>creative</li>
-                <li>survival</li>
-                <li>adventure</li>
-                <li>spectator(minecraft 1.8 or later)</li>
-            </ul></td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>PVP</code></td>
-            <td>By default, servers are created with player-vs-player (PVP) mode enabled.</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>LEVEL_TYPE</code></td>
-            <td>By default, a standard world is generated with hills, valleys, water, etc. A different level type can be configured by setting LEVEL_TYPE to <a href="https://minecraft.wiki/w/Server.properties#level-type">an expected type listed here</a>.
-            </td>
-            <td><code>minecraft:default</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>GENERATOR_SETTINGS</code></td>
-            <td>For some of the level types, <code>GENERATOR_SETTINGS</code> can be used to further customize the world generation <a href="https://minecraft.wiki/w/Server.properties#generator-settings">as described here</a>.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>LEVEL</code></td>
-            <td>You can either switch between world saves or run multiple containers with different saves by using the LEVEL option</td>
-            <td><code>world</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ONLINE_MODE</code></td>
-            <td>By default, server checks connecting players against Minecraft's account database. If you want to create an offline server or your server is not connected to the internet, you can disable the server to try connecting to minecraft.net to authenticate players</td>
-            <td><code>true</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ALLOW_FLIGHT</code></td>
-            <td>Allows users to use flight on your server while in Survival mode, if they have a mod that provides flight installed.</td>
-            <td><code>FALSE</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SERVER_NAME</code></td>
-            <td>The server name</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SERVER_PORT</code></td>
-            <td>Only change this value if you know what you're doing. It is only needed when using host networking and it is rare that host networking should be used.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>PLAYER_IDLE_TIMEOUT</code></td>
-            <td>player-idle-timeout</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENABLE_JMX</code></td>
-            <td>enable-jmx-monitoring</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SYNC_CHUNK_WRITES</code></td>
-            <td>sync-chunk-writes</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENABLE_STATUS</code></td>
-            <td>enable-status</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>ENTITY_BROADCAST_RANGE_PERCENTAGE</code></td>
-            <td>entity-broadcast-range-percentage</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>FUNCTION_PERMISSION_LEVEL</code></td>
-            <td>function-permission-level</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>NETWORK_COMPRESSION_THRESHOLD</code></td>
-            <td>network-compression-threshold</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>OP_PERMISSION_LEVEL</code></td>
-            <td>op-permission-level</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>PREVENT_PROXY_CONNECTIONS</code></td>
-            <td>prevent-proxy-connections</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>USE_NATIVE_TRANSPORT</code></td>
-            <td>use-native-transport</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SIMULATION_DISTANCE</code></td>
-            <td>simulation-distance</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>EXEC_DIRECTLY</code></td>
-            <td>If you would like to docker attach to the Minecraft server console with color and interactive capabilities, then set to <code>true</code></td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>STOP_SERVER_ANNOUNCE_DELAY</code></td>
-            <td>To allow time for players to finish what they're doing during a graceful server shutdown, set <code>STOP_SERVER_ANNOUNCE_DELAY</code> to a number of seconds to delay after an announcement is posted by the server.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>PROXY</code></td>
-            <td>You may configure the use of an HTTP/HTTPS proxy by passing the proxy's URL</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>CONSOLE</code></td>
-            <td>Some older versions (pre-1.14) of Spigot required <code>--noconsole</code> to be passed when detaching stdin</td>
-            <td><code>TRUE</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>GUI</code></td>
-            <td>Some older servers get confused and think that the GUI interface is enabled.</td>
-            <td><code>TRUE</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>STOP_DURATION</code></td>
-            <td>When the container is signalled to stop, the Minecraft process wrapper will attempt to send a "stop" command via RCON or console and waits for the process to gracefully finish.</td>
-            <td><code>60</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>SETUP_ONLY</code></td>
-            <td>If you are using a host-attached data directory, then you can have the image setup the Minecraft server files and stop prior to launching the server process by setting this to <code>true</code></td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>USE_FLARE_FLAGS</code></td>
-            <td>To enable the JVM flags required to fully support the <a href="https://blog.airplane.gg/flare">Flare profiling suite</a>.</td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr>
-        <tr>
-            <td><code>USE_SIMD_FLAGS</code></td>
-            <td>Support for optimized SIMD operation</td>
-            <td><code>false</code></td>
-            <td>⬜️</td>
-        </tr>
-        <!-- <tr>
-            <td><code></code></td>
-            <td></td>
-            <td><code></code></td>
-            <td>⬜️</td>
-        </tr> -->
-    </tbody>
-</table>
-
-### Custom resource pack
-
-<table>
-    <thead>
-        <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>RESOURCE_PACK</code></td>
-            <td>A link to a custom resource pack</td>
+            <td>自定义资源包的链接</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>RESOURCE_PACK_SHA1</code></td>
-            <td>The checksum for the custom resource pack</td>
+            <td>自定义资源包的校验和</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>RESOURCE_PACK_ENFORCE</code></td>
-            <td>Enforce the resource pack on clients</td>
+            <td>强制客户端使用资源包</td>
             <td><code>FALSE</code></td>
             <td>⬜️</td>
         </tr>
     </tbody>
 </table>
 
-### Whitelist
+### 白名单
 
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>ENABLE_WHITELIST</code></td>
-            <td>Enable the whitelist to manually manage the whitelist</td>
+            <td>启用白名单以手动管理白名单</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>WHITELIST</code></td>
-            <td>A list of usernames and/or UUIDs separated by comma</td>
+            <td>用户名和/或UUID的列表，用逗号分隔</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>WHITELIST_FILE</code></td>
-            <td>A url or file path to a whitelist <code>json</code> formatted file.</td>
+            <td>指向白名单<code>json</code>格式文件的URL或文件路径</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>OVERRIDE_WHITELIST</code></td>
-            <td>Enforce regeneration of the whitelist on each server startup.</td>
+            <td>强制在每次服务器启动时重新生成白名单</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
@@ -531,256 +636,253 @@ alternatively, you can mount: <code>/etc/localtime:/etc/localtime:ro
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>是否必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>ENABLE_RCON</code></td>
-            <td>Enable/disable RCON support; however, be aware that disabling RCON will remove and limit some features, such as interactive and color console support.</td>
+            <td>启用/禁用RCON支持；但请注意，禁用RCON将移除并限制某些功能，例如交互式和彩色控制台支持。</td>
             <td><code>true</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>RCON_PASSWORD</code></td>
-            <td>You <strong>MUST</strong> change this value</td>
-            <td><code>Randomly generated</code></td>
+            <td>你必须更改此值</td>
+            <td><code>随机生成</code></td>
             <td>✅</td>
         </tr>
         <tr>
             <td><code>RCON_PORT</code></td>
-            <td>The port for RCON</td>
+            <td>RCON的端口</td>
             <td><code>25575</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>BROADCAST_RCON_TO_OPS</code></td>
-            <td>Sets broadcast-rcon-to-ops server property</td>
+            <td>设置广播-rcon-to-ops服务器属性</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
 			<td><code>RCON_CMDS_STARTUP</code></td>
-			<td>RCON commands to execute when the server starts.</td>
+			<td>服务器启动时执行的RCON命令。</td>
 			<td><code></code></td>
 			<td>⬜️</td>
 		</tr>
 		<tr>
 			<td><code>RCON_CMDS_ON_CONNECT</code></td>
-			<td>RCON commands to execute whenever a client connects to the server.</td>
+			<td>每当客户端连接到服务器时执行的RCON命令。</td>
 			<td><code></code></td>
 			<td>⬜️</td>
 		</tr>
 		<tr>
 			<td><code>RCON_CMDS_FIRST_CONNECT</code></td>
-			<td>RCON commands to execute on the first client connection to the server.</td>
+			<td>第一个客户端连接到服务器时执行的RCON命令。</td>
 			<td><code></code></td>
 			<td>⬜️</td>
 		</tr>
 		<tr>
 			<td><code>RCON_CMDS_ON_DISCONNECT</code></td>
-			<td>RCON commands to execute whenever a client disconnects from the server.</td>
+			<td>每当客户端从服务器断开连接时执行的RCON命令。</td>
 			<td><code></code></td>
 			<td>⬜️</td>
 		</tr>
 		<tr>
 			<td><code>RCON_CMDS_LAST_DISCONNECT</code></td>
-			<td>RCON commands to execute when the last client disconnects from the server.</td>
+			<td>最后一个客户端从服务器断开连接时执行的RCON命令。</td>
 			<td><code></code></td>
 			<td>⬜️</td>
 		</tr>
     </tbody>
 </table>
 
-### Auto-Pause
+### 自动暂停
 
 !!! note
 
-    Autopause is not compatible with `EXEC_DIRECTLY=true` and the two cannot be set together.
+    自动暂停功能与`EXEC_DIRECTLY=true`不兼容，两者不能同时设置。
 
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>是否必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>ENABLE_AUTOPAUSE</code></td>
-            <td>Enable the Autopause functionality</td>
+            <td>启用自动暂停功能</td>
             <td><code>FALSE</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOPAUSE_TIMEOUT_EST</code></td>
-            <td>describes the time between the last client disconnect and the pausing of the process</td>
+            <td>描述最后一个客户端断开连接与进程暂停之间的时间</td>
             <td><code>3600</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOPAUSE_TIMEOUT_INIT</code></td>
-            <td>describes the time between server start and the pausing of the process, when no client connects in-between</td>
+            <td>描述服务器启动与进程暂停之间的时间，当在此期间没有客户端连接时</td>
             <td><code>600</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOPAUSE_TIMEOUT_KN</code></td>
-            <td>describes the time between knocking of the port (e.g. by the main menu ping) and the pausing of the process, when no client connects in-between</td>
+            <td>描述端口ping（例如MOTD ping）与进程暂停之间的时间，当在此期间没有客户端连接时</td>
             <td><code>120</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOPAUSE_PERIOD</code></td>
-            <td>describes period of the daemonized state machine, that handles the pausing of the process</td>
+            <td>描述处理进程暂停的守护进程状态机的周期</td>
             <td><code>10</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOPAUSE_KNOCK_INTERFACE</code></td>
-            <td>Describes the interface passed to the knockd daemon. If the default interface does not work, run the ifconfig command inside the container and derive the interface receiving the incoming connection from its output. The passed interface must exist inside the container. Using the loopback interface (lo) does likely not yield the desired results.</td>
+            <td>描述传递给knockd守护进程的接口。如果默认接口不起作用，请在容器内运行ifconfig命令，并从其输出中获取接收传入连接的接口。传递的接口必须在容器内存在。使用回环接口（lo）可能不会产生预期结果。</td>
             <td><code>eth0</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>DEBUG_AUTOPAUSE</code></td>
-            <td>Adds additional debugging output for AutoPause</td>
+            <td>为自动暂停功能添加额外的调试输出</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
     </tbody>
 </table>
 
-
-
-### Auto-Stop
+### 自动停止
 
 !!! note
 
-    AutoStop function is incompatible with the Autopause functionality, as they basically cancel out each other.
+    自动停止功能与自动暂停功能不兼容，因为它们基本上会相互抵消。
 
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>是否必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>ENABLE_AUTOSTOP</code></td>
-            <td>Enable the AutoStop functionality</td>
+            <td>启用自动停止功能</td>
             <td><code>FALSE</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOSTOP_TIMEOUT_EST</code></td>
-            <td>describes the time between the last client disconnect and the stopping of the server</td>
+            <td>描述最后一个客户端断开连接与服务器停止之间的时间</td>
             <td><code>3600</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOSTOP_TIMEOUT_INIT</code></td>
-            <td>describes the time between server start and the stopping of the server, when no client connects in-between</td>
+            <td>描述服务器启动与服务器停止之间的时间，当在此期间没有客户端连接时</td>
             <td><code>1800</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>AUTOSTOP_PERIOD</code></td>
-            <td>describes period of the daemonized state machine, that handles the stopping of the serve</td>
+            <td>描述处理服务器停止的守护进程状态机的周期</td>
             <td><code>10</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>DEBUG_AUTOSTOP</code></td>
-            <td>Adds additional logging for AutoStop</td>
+            <td>为自动停止功能添加额外的日志记录</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
     </tbody>
 </table>
 
-
 ### CurseForge
 
 !!! tip
-    
-    Refer to the [main documentation page](types-and-platforms/mod-platforms/auto-curseforge.md) for more details and up-to-date information.
+
+    更多详情和最新信息，请参阅[主文档页面](types-and-platforms/mod-platforms/auto-curseforge.md)。
 
 <table>
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>DEFAULT</th>
-            <th>REQUIRED</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>默认值</th>
+            <th>必需</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td><code>CF_API_KEY</code></td>
-            <td><strong>YOUR</strong> CurseForge (Eternal) API Key.</td>
+            <td><strong>你的</strong> CurseForge (Eternal) API 密钥。</td>
             <td><code></code></td>
             <td>✅</td>
         </tr>
         <tr>
             <td><code>CF_PAGE_URL</code></td>
-            <td>Pass a page URL to the modpack or a specific file</td>
+            <td>传递模组包或特定文件的页面 URL。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_SLUG</code></td>
-            <td>Instead of a URL, the modpack slug can be provided.</td>
+            <td>可以提供模组包的 slug 而不是 URL。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_FILE_ID</code></td>
-            <td>The mod curseforge numerical ID.</td>
+            <td>模组的 CurseForge 数字 ID。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_FILENAME_MATCHER</code></td>
-            <td>Specify a substring to match the desired filename</td>
+            <td>指定一个子字符串来匹配所需的文件名。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_EXCLUDE_INCLUDE_FILE</code></td>
-            <td>Global and per modpack exclusions can be declared in a JSON file and referenced with this variable. <br /><br />By default, the <a href="https://github.com/itzg/docker-minecraft-server/blob/master/files/cf-exclude-include.json">file bundled with the image</a> will be used, but can be disabled by setting this to an empty string. The schema of this file is <a href="https://github.com/itzg/mc-image-helper#excludeinclude-file-schema">documented here</a>.</td>
+            <td>全局和每个模组包的排除项可以在 JSON 文件中声明，并通过此变量引用。<br /><br />默认情况下，将使用<a href="https://github.com/itzg/docker-minecraft-server/blob/master/files/cf-exclude-include.json">与镜像捆绑的文件</a>，但可以通过将其设置为空字符串来禁用。该文件的架构<a href="https://github.com/itzg/mc-image-helper#excludeinclude-file-schema">在此处记录</a>。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_EXCLUDE_MODS</code></td>
-            <td>Mods can be excluded by passing a comma or space delimited list of project slugs or IDs</td>
+            <td>可以通过传递以逗号或空格分隔的项目 slug 或 ID 列表来排除模组。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_FORCE_INCLUDE_MODS</code></td>
-            <td>Mods can be included by passing a comma or space delimited list of project slugs or IDs</td>
+            <td>可以通过传递以逗号或空格分隔的项目 slug 或 ID 列表来包含模组。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_FORCE_SYNCHRONIZE</code></td>
-            <td>Forces the excludes/includes to be re-evaluated</td>
+            <td>强制重新评估排除/包含项。</td>
             <td><code></code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_SET_LEVEL_FROM</code></td>
-            <td>Some modpacks come with world/save data via a worlds file and/or the overrides provided with the modpack. Either approach can be selected to set the LEVEL to the resulting saves directory by setting this to either:
+            <td>一些模组包通过世界文件和/或模组包提供的覆盖项附带世界/保存数据。可以通过将此项设置为以下任一项来选择设置 LEVEL 为生成的保存目录：
             <ul>
                 <li>WORLD_FILE</li>
                 <li>OVERRIDES</li>
@@ -790,18 +892,19 @@ alternatively, you can mount: <code>/etc/localtime:/etc/localtime:ro
         </tr>
         <tr>
             <td><code>CF_PARALLEL_DOWNLOADS</code></td>
-            <td>specify how many parallel mod downloads to perform</td>
+            <td>指定并行下载的模组数量。</td>
             <td><code>4</code></td>
             <td>⬜️</td>
         </tr>
         <tr>
             <td><code>CF_OVERRIDES_SKIP_EXISTING</code></td>
-            <td>if set, files in the overrides that already exist in the data directory are skipped. world data is always skipped, if present.</td>
+            <td>如果设置，覆盖项中已存在于数据目录中的文件将被跳过。如果存在世界数据，则始终跳过。</td>
             <td><code>false</code></td>
             <td>⬜️</td>
         </tr>
     </tbody>
 </table>
+
 
 <!-- ✅ ⬜️ -->
 <!-- <tr>

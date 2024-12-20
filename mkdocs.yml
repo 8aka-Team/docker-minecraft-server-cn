@@ -1,5 +1,5 @@
 ---
-site_name: 在 Docker 上开 MC 服务器 (Java 版n)
+site_name: 在 Docker 上开 MC 服务器 (Java 版)
 site_url: https://docker.yizhan.wiki/
 site_description: 在 Docker 上开 MC 服务器的文档
 repo_url: https://github.com/8aka-Team/docker-minecraft-server-cn
@@ -19,24 +19,25 @@ theme:
   palette:
 
     # Palette toggle for automatic mode
+
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
-        name: Switch to light mode
+        name: 切换到浅色模式
 
-    # Palette toggle for light mode
+    # 浅色模式的调色板切换
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: 切换到深色模式
 
-    # Palette toggle for dark mode
+    # 深色模式的调色板切换
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
         icon: material/brightness-4
-        name: Switch to system preference
+        name: 切换到系统偏好
 
   highlightjs: true
   hljs_languages:
