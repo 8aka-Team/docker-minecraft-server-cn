@@ -124,7 +124,7 @@ docker run -d -it --name mc-server -e EULA=TRUE -p 19132:19132/udp -v mc-volume:
 
 例如，如果你想让 bedrock 服务器以用户 ID 1000 和组 ID 1000 运行，那么可以使用以下命令创建并 chown 名为 "bedrock" 的卷：
 
-```shell script
+```shell
 docker run --rm -v bedrock:/data alpine chown 1000:1000 /data
 ```
 
@@ -215,7 +215,7 @@ docker exec CONTAINER_NAME_OR_ID send-command gamerule dofiretick false
 
 或者，在启用stdin和tty的情况下（例如使用`-it`），通过名称或ID附加到容器的控制台：
 
-```shell script
+```shell
 docker attach CONTAINER_NAME_OR_ID
 ```
 
