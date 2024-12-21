@@ -1,26 +1,24 @@
-To use a different Minecraft version, pass the `VERSION` environment variable (case sensitive), which can have the value
+要使用不同的Minecraft版本，请传递`VERSION`环境变量（区分大小写），该变量可以具有以下值：
 
-- LATEST (the default)
+- LATEST（默认）
 - SNAPSHOT
-- a specific version, such as "1.7.9"
-- or an alpha and beta version, such as "b1.7.3" (server download might not exist)
+- 特定版本，例如“1.7.9”
+- 或alpha和beta版本，例如“b1.7.3”（服务器下载可能不存在）
 
-For example, to use the latest snapshot:
+例如，要使用最新的快照：
 
 ```
 docker run -d -e VERSION=SNAPSHOT ...
 ```
 
-or a specific version:
+或特定版本：
 
 ```
 docker run -d -e VERSION=1.7.9 ...
 ```
 
-When using "LATEST" or "SNAPSHOT" an upgrade can be performed by simply restarting the container.
-During the next startup, if a newer version is available from the respective release channel, then
-the new server jar file is downloaded and used. 
+当使用“LATEST”或“SNAPSHOT”时，只需重新启动容器即可执行升级。在下一次启动时，如果相应发布渠道有更新的版本可用，则下载并使用新的服务器jar文件。
 
 !!! note "注意"
 
-    Over time you might see older versions of the server jar remain in the `/data` directory. It is safe to remove those.
+    随着时间的推移，您可能会在`/data`目录中看到旧版本的服务器jar文件。删除这些文件是安全的。

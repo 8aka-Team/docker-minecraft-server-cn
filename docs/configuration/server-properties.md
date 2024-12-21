@@ -100,7 +100,7 @@ docker run -d -e DIFFICULTY=hard ...
 
 有效值为：`peaceful`、`easy`、`normal`和`hard`，如果不是这些值之一，日志中将输出错误消息。
 
-参考[Minecraft wiki](https://minecraft.wiki/w/Difficulty)
+参考[NitWikit](https://nitwikit.yizhan.wiki/Java/start/config-server#%E8%AE%BE%E7%BD%AE%E9%9A%BE%E5%BA%A6)
 
 ### 白名单玩家
 

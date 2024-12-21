@@ -1,4 +1,4 @@
-Enable [Quilt server](https://quiltmc.org/) mode by adding a `-e TYPE=QUILT` to your command-line.
+启用[Quilt服务器](https://quiltmc.org/)模式，通过在命令行中添加`-e TYPE=QUILT`。
 
 ```
 docker run -d -v /path/on/host:/data \
@@ -6,9 +6,9 @@ docker run -d -v /path/on/host:/data \
     -p 25565:25565 -e EULA=TRUE --name mc itzg/minecraft-server
 ```
 
-By default, the container will install the latest [quilt server launcher](https://quiltmc.org/install/server/), using the latest [quilt-installer](https://github.com/QuiltMC/quilt-installer) against the minecraft version you have defined with `VERSION` (defaulting to the latest vanilla release of the game).
+默认情况下，容器将安装最新的[quilt服务器启动器](https://quiltmc.org/install/server/)，使用最新的[quilt-installer](https://github.com/QuiltMC/quilt-installer)针对您使用`VERSION`定义的Minecraft版本（默认为游戏的最新原版发布版本）。
 
-A specific loader or installer version other than the latest can be requested using `QUILT_LOADER_VERSION` and `QUILT_INSTALLER_VERSION` respectively, such as:
+可以通过`QUILT_LOADER_VERSION`和`QUILT_INSTALLER_VERSION`分别请求特定版本的加载器或安装程序，例如：
 
 ```
 docker run -d -v /path/on/host:/data ... \
@@ -19,9 +19,9 @@ docker run -d -v /path/on/host:/data ... \
 
 !!! note "注意"
 
-    If you wish to use an alternative launcher you can: 
+    如果您希望使用替代启动器，您可以：
 
-    - Provide the path to a custom launcher jar available to the container with `QUILT_LAUNCHER`, relative to `/data` (such as `-e QUILT_LAUNCHER=quilt-server-custom.jar`)
-    - Provide the URL to a custom launcher jar with `QUILT_LAUNCHER_URL` (such as `-e QUILT_LAUNCHER_URL=http://HOST/quilt-server-custom.jar`)
+    - 使用`QUILT_LAUNCHER`提供容器可访问的自定义启动器jar的路径，相对于`/data`（例如`-e QUILT_LAUNCHER=quilt-server-custom.jar`）
+    - 使用`QUILT_LAUNCHER_URL`提供自定义启动器jar的URL（例如`-e QUILT_LAUNCHER_URL=http://HOST/quilt-server-custom.jar`）
 
-See the [Working with mods and plugins](../../mods-and-plugins/index.md) section to set up Quilt mods and configuration.
+请参阅[使用模组和插件](../../mods-and-plugins/index.md)部分以设置Quilt模组和配置。

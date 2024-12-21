@@ -1,58 +1,59 @@
-
+# 混合
 
 ### Magma
 
-A [Magma](https://magmafoundation.org/) server, which is a combination of Forge and PaperMC, can be used with
+一个 [Magma](https://magmafoundation.org/) 服务器，它是 Forge 和 PaperMC 的结合体，可以使用
 
     -e TYPE=MAGMA
 
 !!! note "注意"
 
-    The Magma project has been terminated ([original link died](https://git.magmafoundation.org/magmafoundation/magma-1-20-x/-/commit/4e7abe37403c47d09b74b77bcfc26a19b18f5891), [alternate statement on their discord](https://discord.com/channels/612695539729039411/647287352833605662/1174412642962649198) ). Please use Magma Maintained for 1.12.2, 1.18.2 and 1.19.3, or Ketting for 1.20.1+.
+    Magma 项目已经终止（[原链接失效](https://git.magmafoundation.org/magmafoundation/magma-1-20-x/-/commit/4e7abe37403c47d09b74b77bcfc26a19b18f5891)，[Discord 上的替代声明](https://discord.com/channels/612695539729039411/647287352833605662/1174412642962649198)）。请使用 Magma Maintained 用于 1.12.2、1.18.2 和 1.19.3，或使用 Ketting 用于 1.20.1+。
 
-    There are limited base versions supported, so you will also need to  set `VERSION`, such as "1.12.2", "1.16.5", etc.
+    支持的基础版本有限，因此您还需要设置 `VERSION`，例如 "1.12.2"、"1.16.5" 等。
 
 ### Magma Maintained
-A [Magma Maintained](https://github.com/magmamaintained/) server, which is a alternative project of Magma, can be used with
+
+一个 [Magma Maintained](https://github.com/magmamaintained/) 服务器，它是 Magma 的替代项目，可以使用
 
     -e TYPE=MAGMA_MAINTAINED
 
 !!! note "注意"
 
-    There are limited base versions supported, so you will also need to set `VERSION`, such as "1.12.2", "1.18.2", "1.19.3", or "1.20.1".
+    支持的基础版本有限，因此您还需要设置 `VERSION`，例如 "1.12.2"、"1.18.2"、"1.19.3" 或 "1.20.1"。
 
-    In addition, `FORGE_VERSION` and `MAGMA_MAINTAINED_TAG` must be specified. You can find the supported `FORGE_VERSION` and `MAGMA_MAINTAINED_TAG` in a releases page for each repositories.
+    此外，必须指定 `FORGE_VERSION` 和 `MAGMA_MAINTAINED_TAG`。您可以在每个仓库的发布页面找到支持的 `FORGE_VERSION` 和 `MAGMA_MAINTAINED_TAG`。
 
 ### Ketting
 
-A [Ketting](https://github.com/kettingpowered/Ketting-1-20-x) server, which is an alternative project of Magma 1.20.1+, can be used with
+一个 [Ketting](https://github.com/kettingpowered/Ketting-1-20-x) 服务器，它是 Magma 1.20.1+ 的替代项目，可以使用
 
     -e TYPE=KETTING
 
-There are limited base versions supported, so you will also need to  set `VERSION`, such as "1.20.1" or later.
+支持的基础版本有限，因此您还需要设置 `VERSION`，例如 "1.20.1" 或更高版本。
 
-`FORGE_VERSION` and `KETTING_VERSION` may be specified; however, they will be defaulted by the [Ketting launcher](https://github.com/kettingpowered/kettinglauncher) otherwise.
-Available Ketting Versions may be found at [https://reposilite.c0d3m4513r.com/#/Ketting-Server-Releases/org/kettingpowered/server/forge](https://reposilite.c0d3m4513r.com/#/Ketting-Server-Releases/org/kettingpowered/server/forge).
-The Version structure is `MinecraftVersion-ForgeVersion-KettingVersion` (e.g. `1.20.1-47.2.20-0.1.4` is for Minecraft `1.20.1`, Forge `47.2.20` and Ketting `0.1.4`).
+可以指定 `FORGE_VERSION` 和 `KETTING_VERSION`；但是，如果未指定，它们将由 [Ketting launcher](https://github.com/kettingpowered/kettinglauncher) 默认设置。
+可用的 Ketting 版本可以在 [https://reposilite.c0d3m4513r.com/#/Ketting-Server-Releases/org/kettingpowered/server/forge](https://reposilite.c0d3m4513r.com/#/Ketting-Server-Releases/org/kettingpowered/server/forge) 找到。
+版本结构为 `MinecraftVersion-ForgeVersion-KettingVersion`（例如 `1.20.1-47.2.20-0.1.4` 适用于 Minecraft `1.20.1`，Forge `47.2.20` 和 Ketting `0.1.4`）。
 
 ### Mohist
 
-A [Mohist](https://github.com/MohistMC/Mohist) server can be used with
+一个 [Mohist](https://github.com/MohistMC/Mohist) 服务器可以使用
 
     -e TYPE=MOHIST
 
 !!! note "注意"
 
-    There are limited base versions supported, so you will also need to  set `VERSION`, such as "1.12.2"
+    支持的基础版本有限，因此您还需要设置 `VERSION`，例如 "1.12.2"
 
-By default the latest build will be used; however, a specific build number can be selected by setting `MOHIST_BUILD`, such as
+默认情况下将使用最新构建；但是，可以通过设置 `MOHIST_BUILD` 来选择特定构建号，例如
 
     -e VERSION=1.16.5 -e MOHIST_BUILD=374
 
 ### Catserver
 
-A [Catserver](http://catserver.moe/) type server can be used with
+一个 [Catserver](http://catserver.moe/) 类型的服务器可以使用
 
     -e TYPE=CATSERVER
 
-> **NOTE** Catserver only provides a single release stream, so `VERSION` is ignored
+> **注意** Catserver 仅提供单一发布流，因此 `VERSION` 被忽略

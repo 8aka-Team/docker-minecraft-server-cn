@@ -1,10 +1,10 @@
-A [PaperMC server](https://papermc.io/) can be automatically downloaded, upgraded, and run by setting the environment variable TYPE to "PAPER".
+[PaperMC服务器](https://papermc.io/)可以通过将环境变量TYPE设置为“PAPER”来自动下载、升级和运行。
 
-By default, the container will find and download the latest build for the `VERSION` chosen. If `VERSION` is not specified, then the latest Minecraft version released by PaperMC is selected. Along with a specific `VERSION`, a specific Paper build can be selected by setting the environment variable `PAPER_BUILD`. 
+默认情况下，容器将找到并下载所选`VERSION`的最新构建。如果未指定`VERSION`，则选择PaperMC发布的最新Minecraft版本。除了特定的`VERSION`，还可以通过设置环境变量`PAPER_BUILD`来选择特定的Paper构建。
 
-To allow for the selection of experimental builds, set `PAPER_CHANNEL` to "experimental", otherwise only release/default channel builds are selected.
+为了允许选择实验性构建，请将`PAPER_CHANNEL`设置为“experimental”，否则只会选择发布/默认渠道的构建。
 
-!!! example
+!!! example "示例"
 
     ```
     docker run ... -e TYPE=PAPER ... 
@@ -16,62 +16,64 @@ To allow for the selection of experimental builds, set `PAPER_CHANNEL` to "exper
     docker run ... -e TYPE=PAPER -e PAPER_CHANNEL=experimental ... 
     ```
 
-!!! tip "提示"
+!!! note "提示"
 
-    If you see the following error, it likely means you need to set the env var `PAPER_CHANNEL` to "experimental"
+    如果您看到以下错误，可能意味着您需要将环境变量`PAPER_CHANNEL`设置为“experimental”
     
     ```
     No build found for version 1.21 with channel 'default'
     ```
 
-If you are hosting your own copy of Paper you can override the download URL with `PAPER_DOWNLOAD_URL=<url>`.
+如果您正在托管自己的Paper副本，可以使用`PAPER_DOWNLOAD_URL=<url>`覆盖下载URL。
 
-If you have attached a host directory to the `/data` volume, then you can install plugins via the `plugins` subdirectory. You can also [attach a `/plugins` volume](../../mods-and-plugins/index.md#optional-plugins-mods-and-config-attach-points). If you add plugins while the container is running, you'll need to restart it to pick those up.
+如果您已将主机目录附加到`/data`卷，则可以通过`plugins`子目录安装插件。您还可以[附加`/plugins`卷](../../mods-and-plugins/index.md#optional-plugins-mods-and-config-attach-points)。如果您在容器运行时添加插件，则需要重新启动容器以使其生效。
 
-[You can also auto-download plugins using `SPIGET_RESOURCES`.](../../mods-and-plugins/spiget.md)
+[您还可以使用`SPIGET_RESOURCES`自动下载插件。](../../mods-and-plugins/spiget.md)
 
-## Alternatives
+## 替代方案
 
 ### Pufferfish
 
-A [Pufferfish](https://github.com/pufferfish-gg/Pufferfish) server, which is "a highly optimized Paper fork designed for large servers requiring both maximum performance, stability, and "enterprise" features."
+一个[Pufferfish](https://github.com/pufferfish-gg/Pufferfish)服务器，它是“一个高度优化的Paper分支，专为需要最大性能、稳定性和“企业”功能的大型服务器设计。”
 
     -e TYPE=PUFFERFISH
 
 !!! note "注意"
 
-    The `VERSION` variable is used to select branch latest, 1.18, or 1.17. Use PUFFERFISH_BUILD to really select the SERVER VERSION number.
+    `VERSION`变量用于选择分支最新、1.18或1.17。使用PUFFERFISH_BUILD来真正选择服务器版本号。
 
-Extra variables:
-- `PUFFERFISH_BUILD=lastSuccessfulBuild` : set a specific Pufferfish build to use. Example: selecting build 47 => 1.18.1, or build 50 => 1.18.2 etc
-- `FORCE_REDOWNLOAD=false` : set to true to force the located server jar to be re-downloaded
-- `USE_FLARE_FLAGS=false` : set to true to add appropriate flags for the built-in [Flare](https://blog.airplane.gg/flare) profiler
+额外变量：
+
+- `PUFFERFISH_BUILD=lastSuccessfulBuild` : 设置要使用的特定Pufferfish构建。例如：选择构建47 => 1.18.1，或构建50 => 1.18.2等
+- `FORCE_REDOWNLOAD=false` : 设置为true以强制重新下载已定位的服务器jar
+- `USE_FLARE_FLAGS=false` : 设置为true以添加内置[Flare](https://blog.airplane.gg/flare)分析器的适当标志
 
 ### Purpur
 
-A [Purpur](https://purpurmc.org/) server, which is "a drop-in replacement for Paper servers designed for configurability and new, fun, exciting gameplay features."
+一个[Purpur](https://purpurmc.org/)服务器，它是“一个专为可配置性和新的、有趣的、令人兴奋的游戏玩法功能设计的Paper服务器的即插即用替代品。”
 
     -e TYPE=PURPUR
 
 !!! note "注意"
 
-    The `VERSION` variable is used to lookup a build of Purpur to download
+    `VERSION`变量用于查找要下载的Purpur构建
 
-Extra variables:
-- `PURPUR_BUILD=LATEST` : set a specific Purpur build to use
-- `FORCE_REDOWNLOAD=false` : set to true to force the located server jar to be re-downloaded
-- `USE_FLARE_FLAGS=false` : set to true to add appropriate flags for the built-in [Flare](https://blog.airplane.gg/flare) profiler
-- `PURPUR_DOWNLOAD_URL=<url>` : set URL to download Purpur from custom URL.
+额外变量:
+
+- `PURPUR_BUILD=LATEST` : 设置要使用的特定Purpur构建
+- `FORCE_REDOWNLOAD=false` : 设置为true以强制重新下载已定位的服务器jar
+- `USE_FLARE_FLAGS=false` : 设置为true以添加内置[Flare](https://blog.airplane.gg/flare)分析器的适当标志
+- `PURPUR_DOWNLOAD_URL=<url>` : 设置从自定义URL下载Purpur的URL。
 
 ### Folia
 
-A [Folia server](https://papermc.io/software/folia) can be used by setting the environment variable `TYPE` to "FOLIA".
+一个[Folia服务器](https://papermc.io/software/folia)可以通过将环境变量`TYPE`设置为“FOLIA”来使用。
 
-By default, the container will run the latest experimental build of [Folia server](https://papermc.io/downloads), but you can also choose to run a specific build with `-e FOLIABUILD=26`. The release channel can be changed with the variable `FOLIA_CHANNEL`; however, only experimental builds are available at this time.
+默认情况下，容器将运行[Folia服务器](https://papermc.io/downloads)的最新实验性构建，但您也可以选择使用`-e FOLIABUILD=26`运行特定构建。发布渠道可以通过变量`FOLIA_CHANNEL`更改；但是，目前只有实验性构建可用。
 
-!!! example
+!!! 示例
 
-    Using `docker run`
+    使用`docker run`
     
     ```
     docker run -d -v /path/on/host:/data \
@@ -79,11 +81,12 @@ By default, the container will run the latest experimental build of [Folia serve
         -p 25565:25565 -e EULA=TRUE --name mc itzg/minecraft-server
     ```
 
-If you are hosting your own copy of Folia you can override the download URL with `FOLIA_DOWNLOAD_URL=<url>`.
+如果您正在托管自己的Folia副本，可以使用`FOLIA_DOWNLOAD_URL=<url>`覆盖下载URL。
 
-If you have attached a host directory to the `/data` volume, then you can install plugins via the `plugins` subdirectory. You can also [attach a `/plugins` volume](../../mods-and-plugins/index.md#optional-plugins-mods-and-config-attach-points). If you add plugins while the container is running, you'll need to restart it to pick those up.
+如果您已将主机目录附加到`/data`卷，则可以通过`plugins`子目录安装插件。您还可以[附加`/plugins`卷](../../mods-and-plugins/index.md#optional-plugins-mods-and-config-attach-points)。如果您在容器运行时添加插件，则需要重新启动容器以使其生效。
 
-[You can also auto-download plugins using `SPIGET_RESOURCES`.](../../mods-and-plugins/spiget.md)
+[您还可以使用`SPIGET_RESOURCES`自动下载插件。](../../mods-and-plugins/spiget.md)
 
 !!! note "注意"
-    The Folia type inherits from the Paper type. Paper's variables will override the Folia ones.
+
+    Folia类型继承自Paper类型。Paper的变量将覆盖Folia的变量。

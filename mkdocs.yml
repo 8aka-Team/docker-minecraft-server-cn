@@ -105,5 +105,6 @@ nav:
     - 配置: /configuration/
     - 杂项: /misc/
     - Mod与插件: /mods-and-plugins/
-    - /*
+    - 类型与平台: /types-and-platforms/
+    - 版本: /versions/
 

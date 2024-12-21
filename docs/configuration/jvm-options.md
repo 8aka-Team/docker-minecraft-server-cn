@@ -50,7 +50,7 @@
             memory: 4G  
     ```
 
-!!! 重要
+!!! important  "重要"
     上述设置仅设置 Java **堆** 限制。容器整体的内存资源请求和限制也应考虑非堆内存使用。额外增加 25% 是一个[一般最佳实践](https://dzone.com/articles/best-practices-java-memory-arguments-for-container)。
 
 ## 额外 JVM 选项

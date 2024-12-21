@@ -1,33 +1,33 @@
 # Feed the Beast
 
 !!! note "注意"
-    Requires one of the Ubuntu with Hotspot images listed in [the Java versions section](../../versions/java.md).
+    需要使用[Java版本部分](../../versions/java.md)中列出的带有Hotspot的Ubuntu镜像之一。
 
-[Feed the Beast application](https://www.feed-the-beast.com/) modpacks are supported by setting `MODPACK_PLATFORM`, `MOD_PLATFORM` or `TYPE` to "FTBA"
+[Feed the Beast 应用程序](https://www.feed-the-beast.com/) 的模组包通过将 `MODPACK_PLATFORM`、`MOD_PLATFORM` 或 `TYPE` 设置为 "FTBA" 来支持。
 
 !!! note "注意"
-    The "A" at the end of "FTBA" is important. The value "FTB" used to be an alias for "CURSEFORGE".
+    "FTBA" 末尾的 "A" 很重要。以前，"FTB" 是 "CURSEFORGE" 的别名。
 
-This mod platform type will automatically take care of downloading and installing the modpack and appropriate version of Forge, so the `VERSION` does not need to be specified.
+此模组平台类型将自动处理下载和安装模组包及相应版本的Forge，因此不需要指定 `VERSION`。
 
-### Environment Variables:
-- `FTB_MODPACK_ID`: **required**, the numerical ID of the modpack to install. The ID can be located by [finding the modpack](https://www.feed-the-beast.com/modpack) and locating the ID in this part of the URL:
+### 环境变量：
+- `FTB_MODPACK_ID`: **必需**，要安装的模组包的数字ID。可以通过[查找模组包](https://www.feed-the-beast.com/modpack)并在此URL部分中找到ID：
 
   ```
   https://www.feed-the-beast.com/modpacks/23-ftb-infinity-evolved-17
                                           ^^
   ```
-- `FTB_MODPACK_VERSION_ID`: optional, the numerical ID of the version to install. If not specified, the latest version will be installed. The "Version ID" can be obtained by hovering over a server file entry and grabbing [this ID in the URL](../../img/ftba-version-id-popup.png).
+- `FTB_MODPACK_VERSION_ID`: 可选，要安装的版本的数字ID。如果未指定，将安装最新版本。可以通过悬停在服务器文件条目上并抓取[此URL中的ID](../../img/ftba-version-id-popup.png)来获取“版本ID”。
 
-- `FTB_FORCE_REINSTALL`: if the files become inconsistent, such as when accidentally removing them, the FTB can be forced to re-run by setting this to "true"
+- `FTB_FORCE_REINSTALL`: 如果文件变得不一致，例如意外删除它们，可以通过将此项设置为 "true" 来强制FTB重新运行。
 
-### Upgrading
+### 升级
 
-If a specific `FTB_MODPACK_VERSION_ID` was not specified, simply restart the container to pick up the newest modpack version. If using a specific version ID, recreate the container with the new version ID.
+如果未指定特定的 `FTB_MODPACK_VERSION_ID`，只需重新启动容器即可获取最新的模组包版本。如果使用特定的版本ID，请使用新的版本ID重新创建容器。
 
-### Example
+### 示例
 
-The following example runs the latest version of [FTB Presents Direwolf20 1.12](https://ftb.neptunepowered.org/pack/ftb-presents-direwolf20-1-12/):
+以下示例运行[FTB Presents Direwolf20 1.12](https://ftb.neptunepowered.org/pack/ftb-presents-direwolf20-1-12/)的最新版本：
 
 ``` shell
 docker run -d --name mc-ftb -e EULA=TRUE \
@@ -38,4 +38,4 @@ docker run -d --name mc-ftb -e EULA=TRUE \
 
 !!! note "注意"
 
-    Normally you will also add `-v` volume for `/data` since the mods and config are installed there along with world data.
+    通常你还会为 `/data` 添加 `-v` 卷，因为模组和配置文件以及世界数据都安装在那里。

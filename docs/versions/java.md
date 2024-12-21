@@ -1,43 +1,43 @@
-## Image tags
+## 镜像标签
 
-Image references can either omit the tag, which implies the tag `latest`, such as
+镜像引用可以省略标签，这意味着使用标签 `latest`，例如：
 
     itzg/minecraft-server
 
-or explicitly include the tag, such as
+或者明确包含标签，例如：
 
     itzg/minecraft-server:<tag>
 
-where `<tag>` refers to the first column of this table:
+其中 `<tag>` 指的是此表的第一列：
 
-| Tag              | Java version | Linux  | JVM Type           | Architecture        |
-|------------------|--------------|--------|--------------------|---------------------|
-| latest           | 21           | Ubuntu | Hotspot            | amd64, arm64        |
-| stable           | 21           | Ubuntu | Hotspot            | amd64, arm64        |
-| java21           | 21           | Ubuntu | Hotspot            | amd64, arm64        |
-| java21-jdk       | 21           | Ubuntu | Hotspot+JDK        | amd64, arm64        |
-| java21-alpine    | 21           | Alpine | Hotspot            | amd64, arm64        |
-| java21-graalvm   | 21           | Oracle | Oracle GraalVM[^1] | amd64, arm64        |   
-| java17           | 17           | Ubuntu | Hotspot            | amd64, arm64, armv7 |
-| java17-graalvm   | 17           | Oracle | Oracle GraalVM[^1] | amd64, arm64        |   
-| java17-alpine    | 17           | Alpine | Hotspot            | amd64  (1)          |
-| java11           | 11           | Ubuntu | Hotspot            | amd64, arm64, armv7 |
-| java8            | 8            | Ubuntu | Hotspot            | amd64, arm64, armv7 |
-| java8-jdk        | 8            | Ubuntu | Hotspot+JDK        | amd64               |
-| java8-openj9     | 8            | Debian | OpenJ9             | amd64               |
-| java8-graalvm-ce | 8            | Oracle | GraalVM CE         | amd64               |
+| 标签               | Java 版本 | Linux  | JVM 类型             | 架构                  |
+|------------------|---------|--------|--------------------|---------------------|
+| latest           | 21      | Ubuntu | Hotspot            | amd64, arm64        |
+| stable           | 21      | Ubuntu | Hotspot            | amd64, arm64        |
+| java21           | 21      | Ubuntu | Hotspot            | amd64, arm64        |
+| java21-jdk       | 21      | Ubuntu | Hotspot+JDK        | amd64, arm64        |
+| java21-alpine    | 21      | Alpine | Hotspot            | amd64, arm64        |
+| java21-graalvm   | 21      | Oracle | Oracle GraalVM[^1] | amd64, arm64        |   
+| java17           | 17      | Ubuntu | Hotspot            | amd64, arm64, armv7 |
+| java17-graalvm   | 17      | Oracle | Oracle GraalVM[^1] | amd64, arm64        |   
+| java17-alpine    | 17      | Alpine | Hotspot            | amd64  (1)          |
+| java11           | 11      | Ubuntu | Hotspot            | amd64, arm64, armv7 |
+| java8            | 8       | Ubuntu | Hotspot            | amd64, arm64, armv7 |
+| java8-jdk        | 8       | Ubuntu | Hotspot+JDK        | amd64               |
+| java8-openj9     | 8       | Debian | OpenJ9             | amd64               |
+| java8-graalvm-ce | 8       | Oracle | GraalVM CE         | amd64               |
 
-1. Why no arm64 for Java 17 Alpine? That is because the base images, such as [elipse-temurin](https://hub.docker.com/_/eclipse-temurin/tags?page=&page_size=&ordering=&name=17-jre-alpine) do not provide support for that. Use the Ubuntu based images instead.
+1. 为什么 Java 17 Alpine 没有 arm64？这是因为基础镜像，例如 [elipse-temurin](https://hub.docker.com/_/eclipse-temurin/tags?page=&page_size=&ordering=&name=17-jre-alpine) 不提供对该架构的支持。请改用基于 Ubuntu 的镜像。
 
-!!! example "Example using java8"
+!!! example "使用 java8 的示例"
 
-    With docker run command-line
+    使用 docker run 命令行
     
     ```
     docker run -it -e EULA=true itzg/minecraft-server:java8
     ```
     
-    or in a compose file
+    或在 compose 文件中
     
     ```yaml
     services:
@@ -47,57 +47,56 @@ where `<tag>` refers to the first column of this table:
 
 !!! note "Latest"
 
-    The "latest" tag shifts to include not only the latest features and bug fixes, but also the latest Java version that Mojang requires for the latest Minecraft version.
+    "latest" 标签不仅包含最新的功能和错误修复，还包含 Mojang 要求的最新 Minecraft 版本的最新 Java 版本。
 
-!!! tip "Class File Version"
+!!! note "类文件版本"
 
-    If the Minecraft startup is logging an error about a "class file version", then refer [to this table](https://javaalmanac.io/bytecode/versions/) to identify the JDK/Java version corresponding to each class file version.
+    如果 Minecraft 启动时记录了关于 "类文件版本" 的错误，请参考 [此表](https://javaalmanac.io/bytecode/versions/) 以识别与每个类文件版本对应的 JDK/Java 版本。
 
-### Release versions
+### 发布版本
 
-Since the tags referenced above will shift as the newest image build brings in new features and bug fixes, released variants of those can also be used to pin a specific build of the image.
+由于上述标签会随着最新镜像构建引入新功能和错误修复而变化，因此也可以使用这些标签的发布变体来固定特定构建的镜像。
 
-The syntax of released image tags is:
+发布镜像标签的语法是：
 
     itzg/minecraft-server:<release>-<java tag>
 
-where `java tag` still refers to the first column of the table above and `release` refers to [one of the image releases](https://github.com/itzg/docker-minecraft-server/releases).
+其中 `java tag` 仍然指的是上表的第一列，`release` 指的是 [其中一个镜像发布版本](https://github.com/itzg/docker-minecraft-server/releases)。
 
-!!! example
+!!! example "实例"
 
-    For example, the 2024.4.0 release of the Java 17 image would be
+    例如，Java 17 镜像的 2024.4.0 发布版本将是
     
     ```
     itzg/minecraft-server:2024.4.0-java17
     ```
 
-### Stable image tag
+### 稳定镜像标签
 
-The `stable` image tag combines the benefits of `latest` and [release versions](#release-versions) since it shifts to refer to the most recently released version.
+`stable` 镜像标签结合了 `latest` 和 [发布版本](#release-versions) 的优点，因为它会更新为最近发布的版本。
 
-## Version compatibilities
+## 版本兼容性
 
-[This section in the Minecraft wiki](https://minecraft.wiki/w/Tutorials/Update_Java#Why_update?) lists out versions of **vanilla** Minecraft versions and the corresponding Java version that is required.
+[NitWikit 中的这一部分](https://nitwikit.yizhan.wiki/preparation/choose-and-download-and-install-java/) 列出了 Minecraft 版本及其所需的相应 Java 版本。
 
-### Class file version 65.0
+### 类文件版本 65.0
 
-If encountering a startup failure similar to the following examples, then ensure that the latest image has been re-pulled to use a Java 21. Alternatively, set the image tag specifically to `itzg/minecraft-server:java21`.
+如果遇到类似于以下示例的启动失败，请确保已重新拉取最新镜像以使用 Java 21。或者，将镜像标签明确设置为 `itzg/minecraft-server:java21`。
 
 > Exception in thread "ServerMain" java.lang.UnsupportedClassVersionError: org/bukkit/craftbukkit/Main has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 
-or
+或
 
 > Error: LinkageError occurred while loading main class net.minecraft.bundler.Main
 java.lang.UnsupportedClassVersionError: net/minecraft/bundler/Main has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 
+### Forge 版本
 
-### Forge versions
-
-Forge and its mods sometimes utilize non-public APIs of the JVM and as such are suspceptible to becoming broken with newer Java versions.
+Forge 及其模组有时会使用 JVM 的非公开 API，因此容易在新 Java 版本中出现问题。
 
 #### Java 21
 
-Some mods even up to Minecraft 1.21 require Java 17 and will not run on the latest Java version. If you see an error like the following then be sure to explicitly use a Java 17 tagged image:
+即使到 Minecraft 1.21 的一些模组也需要 Java 17，并且不会在最新 Java 版本上运行。如果你看到类似以下的错误，请确保明确使用 Java 17 标签的镜像：
 
 ```
 Caused by: org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException: java.util.List
@@ -106,20 +105,20 @@ Caused by: org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException
 
 #### Java 8
 
-For Forge versions less than 1.18, you _must_ use the `java8-multiarch` (or other java8) image tag.
+对于低于 1.18 的 Forge 版本，你必须使用 `java8-multiarch`（或其他 java8）镜像标签。
 
-In general, if you see the following line in a server startup failure, then it means you need to be using Java 8 instead of the latest image Java version:
+通常，如果你在服务器启动失败中看到以下行，这意味着你需要使用 Java 8 而不是最新镜像的 Java 版本：
 
 ```
 Caused by: java.lang.ClassCastException: class jdk.internal.loader.ClassLoaders$AppClassLoader 
    cannot be cast to class java.net.URLClassLoader
 ```
 
-Forge also doesn't support openj9 JVM implementation.
+Forge 也不支持 openj9 JVM 实现。
 
-## Deprecated Image Tags
+## 已弃用的镜像标签
 
-The following image tags have been deprecated and are no longer receiving updates:
+以下镜像标签已被弃用，不再接收更新：
 
 - java19
 - adopt13
@@ -131,7 +130,7 @@ The following image tags have been deprecated and are no longer receiving update
 - java17-graalvm-ce
 - java17-openj9
 - java20-graalvm, java20, java20-alpine
-- java8-multiarch is still built and pushed, but please move to java8 instead
+- java8-multiarch 仍然构建和推送，但请迁移到 java8
 - java8-alpine
 
-[^1]: Based on the [Oracle GraalMV images](https://blogs.oracle.com/java/post/new-oracle-graalvm-container-images), which as of JDK 17, are now under the [GraalVM Free License](https://blogs.oracle.com/java/post/graalvm-free-license) incorporating what used to be known as the GraalVM Enterprise. 
+[^1]: 基于 [Oracle GraalMV 镜像](https://blogs.oracle.com/java/post/new-oracle-graalvm-container-images)，从 JDK 17 开始，现在基于 [GraalVM 免费许可证](https://blogs.oracle.com/java/post/graalvm-free-license)，整合了以前称为 GraalVM Enterprise 的内容。

@@ -1,14 +1,14 @@
-# Server Types and Modpack Platforms
+# 服务器类型和模组包平台
 
-Server types can be selected by setting the `TYPE` environment variable to one of the types described in these sections.
+服务器类型可以通过将 `TYPE` 环境变量设置为这些部分中描述的类型之一来选择。
 
-The default server type is [the official software provided by Mojang](https://www.minecraft.net/en-us/download/server), which can be explicitly selected by setting `TYPE` to "VANILLA".
+默认服务器类型是 [Mojang 提供的官方软件](https://www.minecraft.net/en-us/download/server)，可以通过将 `TYPE` 设置为 "VANILLA" 来明确选择。
 
-**From the sections to the left...**
+**从左侧的部分...**
 
-The **modpack platforms** take a modpack identifier, file, etc and use that to select and download the appropriate version of a mod loader, such as Forge or Fabric, downloading declared mods/plugins, and apply any additional files. The modpack platforms are selected by setting `MODPACK_PLATFORM`; however, for ease of use and backward compatibility, the selection can be set in `TYPE` or `MOD_PLATFORM`.
+**模组包平台** 接受模组包标识符、文件等，并使用这些信息来选择和下载适当的模组加载器版本，例如 Forge 或 Fabric，下载声明的模组/插件，并应用任何附加文件。模组包平台通过设置 `MODPACK_PLATFORM` 来选择；然而，为了便于使用和向后兼容，可以在 `TYPE` 或 `MOD_PLATFORM` 中设置选择。
 
-The individual **server types** allow for selecting the mod loader / server type and specific versions of those. 
+各个 **服务器类型** 允许选择模组加载器/服务器类型以及这些类型的特定版本。
 
-!!! important
-    For all the server types, the `VERSION` environment variable is used to declare the Minecraft version itself, such as 1.19.4. Each server type will have specific variables for qualifying their version in addition to the Minecraft version.
+!!! important  "重要"
+    对于所有服务器类型，`VERSION` 环境变量用于声明 Minecraft 版本本身，例如 1.19.4。每个服务器类型都会有特定的变量来限定其版本，除了 Minecraft 版本之外。
