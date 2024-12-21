@@ -1,11 +1,11 @@
-# Running on RaspberryPi
+# 在树莓派上运行
 
-To run this image on a RaspberryPi 3 B+, 4, or newer, use any of the image tags [list in the Java version section](../versions/java.md) that specify `armv7` for the architecture, which includes `itzg/minecraft-server:latest`.
+要在树莓派 3 B+、4 或更新的型号上运行此镜像，请使用 [Java 版本部分](../versions/java.md) 中列出的任何指定 `armv7` 架构的镜像标签，其中包括 `itzg/minecraft-server:latest`。
 
-!!! note
-   
-   You may need to lower the memory allocation, such as `-e MEMORY=750m`
+!!! note "注意"
 
-!!! note
+    你可能需要降低内存分配，例如 `-e MEMORY=750m`
 
-    If experiencing issues such as "sleep: cannot read realtime clock: Operation not permitted", ensure `libseccomp` is up to date on your host. In some cases adding `:Z` flag to the `/data` mount may be needed, [but use cautiously](https://docs.docker.com/storage/bind-mounts/#configure-the-selinux-label).
+!!! note "注意"
+
+    如果遇到诸如 "sleep: cannot read realtime clock: Operation not permitted" 的问题，请确保主机上的 `libseccomp` 是最新的。在某些情况下，可能需要为 `/data` 挂载添加 `:Z` 标志，[但请谨慎使用](https://docs.docker.com/storage)

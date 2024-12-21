@@ -17,7 +17,7 @@ docker run -d -v /path/on/host:/data ... \
     -e QUILT_INSTALLER_VERSION=0.4.1
 ```
 
-!!! note
+!!! note "注意"
 
     If you wish to use an alternative launcher you can: 
 

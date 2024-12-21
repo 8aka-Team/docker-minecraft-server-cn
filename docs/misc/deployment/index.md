@@ -1,28 +1,28 @@
-# More Deployment Info 
+# 更多部署信息
 
-## On Kubernetes
+## 在 Kubernetes 上
 
-### Using Helm
+### 使用 Helm
 
 - itzg Helm Chart:
-    - [GitHub repo](https://github.com/itzg/minecraft-server-charts)
-      - [Helm Chart repo](https://itzg.github.io/minecraft-server-charts/)
+    - [GitHub 仓库](https://github.com/itzg/minecraft-server-charts)
+      - [Helm Chart 仓库](https://itzg.github.io/minecraft-server-charts/)
 - [mcsh/server-deployment](https://github.com/mcserverhosting-net/charts)
 
-### Using Shulker
+### 使用 Shulker
 
-[Shulker](https://github.com/jeremylvln/Shulker) is a Kubernetes operator for managing complex and dynamic Minecraft infrastructures, including game servers and proxies. It uses the docker-minecraft-server and docker-bungeecord images under-the-hood.
+[Shulker](https://github.com/jeremylvln/Shulker) 是一个用于管理复杂和动态 Minecraft 基础设施的 Kubernetes 操作符，包括游戏服务器和代理。它在底层使用了 docker-minecraft-server 和 docker-bungeecord 镜像。
 
-## On CloudFormation (AWS)
+## 在 CloudFormation (AWS) 上
 
-If you're looking for a simple way to deploy this to the Amazon Web Services Cloud, check out the [Minecraft Server Deployment (CloudFormation) repository](https://github.com/vatertime/minecraft-spot-pricing). This repository contains a CloudFormation template that will get you up and running in AWS in a matter of minutes. Optionally it uses Spot Pricing so the server is very cheap, and you can easily turn it off when not in use.
+如果你正在寻找一种简单的方法将此部署到 Amazon Web Services 云上，请查看 [Minecraft 服务器部署 (CloudFormation) 仓库](https://github.com/vatertime/minecraft-spot-pricing)。该仓库包含一个 CloudFormation 模板，可以在几分钟内在 AWS 上启动并运行。可选地，它使用 Spot Pricing，因此服务器非常便宜，并且可以在不使用时轻松关闭。
 
-## Supporting Articles
+## 支持文章
 
-Below are supporting articles for server deployment.
+以下是服务器部署的支持文章。
 
-- "Zero to Minecraft Server with Docker Desktop and Compose"
+- "从零到 Minecraft 服务器与 Docker Desktop 和 Compose"
 
     https://dev.to/rela-v/zero-to-minecraft-server-with-docker-desktop-and-compose-500a
 
-    - This is a reference guide/tutorial on how to set up a vanilla Minecraft server using this project, including step-by-step instructions, and information on topics such as port-forwarding.
+    - 这是一个参考指南/教程，介绍如何使用此项目设置一个原版 Minecraft 服务器，包括分步说明，以及有关端口转发等主题的信息。

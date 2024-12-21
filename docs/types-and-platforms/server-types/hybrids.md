@@ -6,7 +6,7 @@ A [Magma](https://magmafoundation.org/) server, which is a combination of Forge 
 
     -e TYPE=MAGMA
 
-!!! note
+!!! note "注意"
 
     The Magma project has been terminated ([original link died](https://git.magmafoundation.org/magmafoundation/magma-1-20-x/-/commit/4e7abe37403c47d09b74b77bcfc26a19b18f5891), [alternate statement on their discord](https://discord.com/channels/612695539729039411/647287352833605662/1174412642962649198) ). Please use Magma Maintained for 1.12.2, 1.18.2 and 1.19.3, or Ketting for 1.20.1+.
 
@@ -17,7 +17,7 @@ A [Magma Maintained](https://github.com/magmamaintained/) server, which is a alt
 
     -e TYPE=MAGMA_MAINTAINED
 
-!!! note
+!!! note "注意"
 
     There are limited base versions supported, so you will also need to set `VERSION`, such as "1.12.2", "1.18.2", "1.19.3", or "1.20.1".
 
@@ -41,7 +41,7 @@ A [Mohist](https://github.com/MohistMC/Mohist) server can be used with
 
     -e TYPE=MOHIST
 
-!!! note
+!!! note "注意"
 
     There are limited base versions supported, so you will also need to  set `VERSION`, such as "1.12.2"
 

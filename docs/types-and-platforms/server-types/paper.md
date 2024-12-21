@@ -16,7 +16,7 @@ To allow for the selection of experimental builds, set `PAPER_CHANNEL` to "exper
     docker run ... -e TYPE=PAPER -e PAPER_CHANNEL=experimental ... 
     ```
 
-!!! tip
+!!! tip "提示"
 
     If you see the following error, it likely means you need to set the env var `PAPER_CHANNEL` to "experimental"
     
@@ -38,7 +38,7 @@ A [Pufferfish](https://github.com/pufferfish-gg/Pufferfish) server, which is "a 
 
     -e TYPE=PUFFERFISH
 
-!!! note
+!!! note "注意"
 
     The `VERSION` variable is used to select branch latest, 1.18, or 1.17. Use PUFFERFISH_BUILD to really select the SERVER VERSION number.
 
@@ -53,7 +53,7 @@ A [Purpur](https://purpurmc.org/) server, which is "a drop-in replacement for Pa
 
     -e TYPE=PURPUR
 
-!!! note
+!!! note "注意"
 
     The `VERSION` variable is used to lookup a build of Purpur to download
 
@@ -85,5 +85,5 @@ If you have attached a host directory to the `/data` volume, then you can instal
 
 [You can also auto-download plugins using `SPIGET_RESOURCES`.](../../mods-and-plugins/spiget.md)
 
-!!! note
+!!! note "注意"
     The Folia type inherits from the Paper type. Paper's variables will override the Folia ones.

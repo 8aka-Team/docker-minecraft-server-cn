@@ -1,70 +1,67 @@
-# Working with mods and plugins
+# 使用模组和插件
 
-## Modpack platforms
+## 模组包平台
 
-By far the easiest way to work with mod and plugins, especially large numbers of them, is to utilize modpacks with [one of the supported modpack platforms](../types-and-platforms/index.md).
+到目前为止，使用模组和插件(尤其是大量模组和插件)最简单的方法是利用模组包，并使用[支持的模组包平台](../types-and-platforms/index.md)之一。
 
-The following are some supported modpack platforms:
+以下是一些支持的模组包平台：
 
 - [Modrinth](../types-and-platforms/mod-platforms/modrinth-modpacks.md) 
 - [CurseForge](../types-and-platforms/mod-platforms/auto-curseforge.md)
 - [Feed the Beast](../types-and-platforms/mod-platforms/ftb.md)
 
-## Download automation
+## 下载自动化
 
-On the left, there are sections describing some download automation options.
+在左侧，有一些部分描述了一些下载自动化选项。
 
-## Mods vs Plugins
+## 模组与插件
 
-The terms "mods" and "plugins" can be quite confusing. Generally, the rule of thumb is that "mods" are used by the types that run client side to modify rendering, add new blocks, and add behaviors server, such as [Forge](../types-and-platforms/server-types/forge.md) and [Fabric](../types-and-platforms/server-types/fabric.md). "Plugins" are used by the types that **only run on servers** to add behaviors, commands, etc such as [Paper](../types-and-platforms/server-types/paper.md) (which derives from [Bukkit/Spigot](../types-and-platforms/server-types/bukkit-spigot.md)). There are also some types that are [hybrids](../types-and-platforms/server-types/hybrids.md), such as Magma, that use both "mods" and "plugins"
+“模组”和“插件”这两个术语可能会让人感到困惑。一般来说，经验法则是“模组”用于在客户端运行的类型，以修改渲染、添加新方块和添加服务器行为，例如[Forge](../types-and-platforms/server-types/forge.md)和[Fabric](../types-and-platforms/server-types/fabric.md)。“插件”用于**仅在服务器上运行**的类型，以添加行为、命令等，例如[Paper](../types-and-platforms/server-types/paper.md)(源自[Bukkit/Spigot](../types-and-platforms/server-types/bukkit-spigot.md))。还有一些类型是[混合型](../types-and-platforms/server-types/hybrids.md)，例如Magma，它们同时使用“模组”和“插件”。
 
-## Optional plugins, mods, and config attach points
+## 可选的插件、模组和配置附加点
 
-There are optional volume paths that can be attached to supply content to be copied into the data area:
+有一些可选的卷路径可以附加，以将内容复制到数据区域：
 
 `/plugins`
-: content in this directory is synchronized into `/data/plugins` for server types that use plugins, [as described above](#mods-vs-plugins). For special cases, the source can be changed by setting `COPY_PLUGINS_SRC` and destination by setting `COPY_PLUGINS_DEST`.
+: 此目录中的内容会同步到使用插件的服务器类型的`/data/plugins`，如上所述。对于特殊情况，可以通过设置`COPY_PLUGINS_SRC`更改源，通过设置`COPY_PLUGINS_DEST`更改目标。
 
 `/mods`
-: content in this directory is synchronized into `/data/mods` for server types that use mods, [as described above](#mods-vs-plugins). For special cases, the source can be changed by setting `COPY_MODS_SRC` and destination by setting `COPY_MODS_DEST`.
+: 此目录中的内容会同步到使用模组的服务器类型的`/data/mods`，如上所述。对于特殊情况，可以通过设置`COPY_MODS_SRC`更改源，通过设置`COPY_MODS_DEST`更改目标。
 
 `/config`
-: contents are synchronized into `/data/config` by default, but can be changed with `COPY_CONFIG_DEST`. For example, `-v ./config:/config -e COPY_CONFIG_DEST=/data` will allow you to copy over files like `bukkit.yml` and so on directly into the server directory. The source can be changed by setting `COPY_CONFIG_SRC`. Set `SYNC_SKIP_NEWER_IN_DESTINATION=false` if you want files from `/config` to take precedence over newer files in `/data/config`.
+: 内容默认同步到`/data/config`，但可以通过设置`COPY_CONFIG_DEST`更改。例如，`-v ./config:/config -e COPY_CONFIG_DEST=/data`允许你直接将文件如`bukkit.yml`等复制到服务器目录。可以通过设置`COPY_CONFIG_SRC`更改源。如果希望来自`/config`的文件优先于`/data/config`中的较新文件，请设置`SYNC_SKIP_NEWER_IN_DESTINATION=false`。
 
-By default, the [environment variable processing](../configuration/interpolating.md) is performed on synchronized files that match the expected suffixes in `REPLACE_ENV_SUFFIXES` (by default "yml,yaml,txt,cfg,conf,properties,hjson,json,tml,toml") and are not excluded by `REPLACE_ENV_VARIABLES_EXCLUDES` and `REPLACE_ENV_VARIABLES_EXCLUDE_PATHS`. This processing can be disabled by setting `REPLACE_ENV_DURING_SYNC` to `false`.
+默认情况下，[环境变量处理](../configuration/interpolating.md)会在同步的文件上执行，这些文件匹配`REPLACE_ENV_SUFFIXES`中的预期后缀(默认值为"yml,yaml,txt,cfg,conf,properties,hjson,json,tml,toml")，并且不被`REPLACE_ENV_VARIABLES_EXCLUDES`和`REPLACE_ENV_VARIABLES_EXCLUDE_PATHS`排除。可以通过设置`REPLACE_ENV_DURING_SYNC`为`false`来禁用此处理。
 
-If you want old mods/plugins to be removed before the content is brought over from those attach points, then add `-e REMOVE_OLD_MODS=TRUE`. You can fine tune the removal process by specifying the `REMOVE_OLD_MODS_INCLUDE` and `REMOVE_OLD_MODS_EXCLUDE` variables, which are comma separated lists of file glob patterns. If a directory is excluded, then it and all of its contents are excluded. By default, only jars are removed. 
+如果你希望在从这些附加点引入内容之前删除旧的模组/插件，那么添加`-e REMOVE_OLD_MODS=TRUE`。你可以通过指定`REMOVE_OLD_MODS_INCLUDE`和`REMOVE_OLD_MODS_EXCLUDE`变量来微调删除过程，这些变量是以逗号分隔的文件全局模式列表。如果排除了目录，则该目录及其所有内容都将被排除。默认情况下，仅删除jar文件。
 
-You can also specify the `REMOVE_OLD_MODS_DEPTH` (default is 16) variable to only delete files up to a certain level.
+你还可以指定`REMOVE_OLD_MODS_DEPTH`(默认值为16)变量，以仅删除到某个级别的文件。
 
-For example: `-e REMOVE_OLD_MODS=TRUE -e REMOVE_OLD_MODS_INCLUDE="*.jar" -e REMOVE_OLD_MODS_DEPTH=1` will remove all old jar files that are directly inside the `plugins/` or `mods/` directory.
+例如：`-e REMOVE_OLD_MODS=TRUE -e REMOVE_OLD_MODS_INCLUDE="*.jar" -e REMOVE_OLD_MODS_DEPTH=1`将删除`plugins/`或`mods/`目录中直接包含的所有旧jar文件。
 
-These paths work well if you want to have a common set of modules in a separate location, but still have multiple worlds with different server requirements in either persistent volumes or a downloadable archive.
+如果你想在单独的位置拥有一组通用模块，但仍然在持久卷或可下载存档中拥有多个具有不同服务器需求的世界，这些路径效果很好。
 
-!!! information ""
-    For more flexibility with mods/plugins preparation, you can declare other directories, files, and URLs to use in [the `MODS` / `PLUGINS` variables](#modsplugins-list).
+!!! info ""
+    为了更灵活地准备模组/插件，你可以在[`MODS` / `PLUGINS`变量](#modsplugins-list)中声明其他目录、文件和URL。
 
+## Zip文件模组包
 
-## Zip file modpack
-
-Like the `WORLD` option above, you can specify the URL or container path of a "mod pack" to download and install into `mods` for Forge/Fabric or `plugins` for Bukkit/Spigot. To use this option pass the environment variable `MODPACK`, such as
+与上面的`WORLD`选项类似，你可以指定“模组包”的URL或容器路径，以下载并安装到Forge/Fabric的`mods`或Bukkit/Spigot的`plugins`中。要使用此选项，传递环境变量`MODPACK`，例如
 
 ```shell
 docker run -d -e MODPACK=http://www.example.com/mods/modpack.zip ...
 ```
 
-!!! note
-    The referenced URL/file must be a zip file with one or more jar files at the
-    top level of the zip archive. Make sure the jars are compatible with the
-    particular `TYPE` of server you are running.
+!!! note "注意"
+    引用的URL/文件必须是zip文件，其中包含一个或多个jar文件在zip存档的顶层。确保jar文件与您正在运行的特定`TYPE`服务器兼容。
 
-## Generic pack files
+## 通用包文件
 
-To install all the server content (jars, mods, plugins, configs, etc.) from a zip or tgz file, then set `GENERIC_PACK` to the container path or URL of the archive file. This can also be used to apply a CurseForge modpack that is missing a server start script and/or Forge installer.
+要安装来自zip或tgz文件的所有服务器内容(jar、模组、插件、配置等)，请将`GENERIC_PACK`设置为存档文件的容器路径或URL。这也可以用于应用缺少服务器启动脚本和/或Forge安装程序的CurseForge模组包。
 
-If multiple generic packs need to be applied together, set `GENERIC_PACKS` instead, with a comma separated list of archive file paths and/or URLs to files.
+如果需要同时应用多个通用包，请设置`GENERIC_PACKS`，并使用逗号分隔的存档文件路径和/或URL列表。
 
-To avoid repetition, each entry will be prefixed by the value of `GENERIC_PACKS_PREFIX` and suffixed by the value of `GENERIC_PACKS_SUFFIX`, both of which are optional. For example, the following variables
+为了避免重复，每个条目都将由`GENERIC_PACKS_PREFIX`的值作为前缀，并由`GENERIC_PACKS_SUFFIX`的值作为后缀，这两者都是可选的。例如，以下变量
 
 ```
 GENERIC_PACKS=configs-v9.0.1,mods-v4.3.6
@@ -72,63 +69,63 @@ GENERIC_PACKS_PREFIX=https://cdn.example.org/
 GENERIC_PACKS_SUFFIX=.zip
 ```
 
-would expand to `https://cdn.example.org/configs-v9.0.1.zip,https://cdn.example.org/mods-v4.3.6.zip`.
+将扩展为`https://cdn.example.org/configs-v9.0.1.zip,https://cdn.example.org/mods-v4.3.6.zip`。
 
-If applying large generic packs, the update can be time-consuming. To skip the update set `SKIP_GENERIC_PACK_UPDATE_CHECK` to "true". Conversely, the generic pack(s) can be forced to be applied by setting `FORCE_GENERIC_PACK_UPDATE` to "true".
+如果应用大型通用包，更新可能会很耗时。要跳过更新，请将`SKIP_GENERIC_PACK_UPDATE_CHECK`设置为"true"。相反，可以通过将`FORCE_GENERIC_PACK_UPDATE`设置为"true"来强制应用通用包。
 
-The most time-consuming portion of the generic pack update is generating and comparing the SHA1 checksum. To skip the checksum generation, set `SKIP_GENERIC_PACK_CHECKSUM` to "true".
+通用包更新中最耗时的部分是生成和比较SHA1校验和。要跳过校验和生成，请将`SKIP_GENERIC_PACK_CHECKSUM`设置为"true"。
 
-## Mods/plugins list
+## 模组/插件列表
 
-You may also download or copy over individual mods/plugins using the `MODS` or `PLUGINS` environment variables. Both are a comma or newline delimited list of
-- URL of a jar file
-- container path to a jar file
-- container path to a directory containing jar files
+你还可以使用`MODS`或`PLUGINS`环境变量下载或复制单个模组/插件。两者都是以逗号或换行符分隔的列表，包含
+- jar文件的URL
+- 容器路径到jar文件
+- 容器路径到包含jar文件的目录
 
 ```shell
 docker run -d -e MODS=https://www.example.com/mods/mod1.jar,/plugins/common,/plugins/special/mod2.jar ...
 ```
 
-The newline delimiting allows for compose file usage like:
+换行符分隔允许在compose文件中使用，例如：
 ```yaml
       PLUGINS: |
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
 ```
 
-## Mod/Plugin URL Listing File 
+## 模组/插件URL列表文件
 
-As an alternative to `MODS`/`PLUGINS`, the variable `MODS_FILE` or `PLUGINS_FILE` can be set with the container path or URL of a text file listing a mod/plugin URLs on each line. For example, the following
+作为`MODS`/`PLUGINS`的替代，可以将`MODS_FILE`或`PLUGINS_FILE`变量设置为包含每行模组/插件URL的文本文件的容器路径或URL。例如，以下
 
      -e MODS_FILE=/extras/mods.txt
 
-would load from a file mounted into the container at `/extras/mods.txt`. That file might look like:
+将从挂载到容器中的`/extras/mods.txt`文件加载。该文件可能如下所示：
 
 ```text
 https://edge.forgecdn.net/files/2965/233/Bookshelf-1.15.2-5.6.40.jar
 https://edge.forgecdn.net/files/2926/27/ProgressiveBosses-2.1.5-mc1.15.2.jar
-# This and next line are ignored
+# 这一行和下一行将被忽略
 #https://edge.forgecdn.net/files/3248/905/goblintraders-1.3.1-1.15.2.jar
 https://edge.forgecdn.net/files/3272/32/jei-1.15.2-6.0.3.16.jar
 https://edge.forgecdn.net/files/2871/647/ToastControl-1.15.2-3.0.1.jar
 ```
 
-!!! note
+!!! note "注意"
 
-    Blank lines and lines that start with a `#` will be ignored
+    空白行和以`#`开头的行将被忽略
 
-    [This compose file](https://github.com/itzg/docker-minecraft-server/blob/master/examples/mods-file/docker-compose.yml) shows another example of using this feature.
+    [此compose文件](https://github.com/itzg/docker-minecraft-server/blob/master/examples/mods-file/docker-compose.yml)展示了使用此功能的另一个示例。
 
-## Remove old mods/plugins
+## 删除旧的模组/插件
 
-When the `MODPACK` option above is specified you can also instruct script to delete old mods/plugins prior to installing new ones. This behaviour is desirable in case you want to upgrade mods/plugins from downloaded zip file.
+当指定了上面的`MODPACK`选项时，你还可以指示脚本在安装新模组/插件之前删除旧的模组/插件。如果你想从下载的zip文件升级模组/插件，这种行为是可取的。
 
-To use this option pass the environment variable `REMOVE_OLD_MODS=TRUE`, such as
+要使用此选项，传递环境变量`REMOVE_OLD_MODS=TRUE`，例如
 
 ```shell
 docker run -d -e REMOVE_OLD_MODS=TRUE -e MODPACK=http://www.example.com/mods/modpack.zip ...
 ```
 
-!!! danger 
+!!! danger "危险"
 
-    All content of the `mods` or `plugins` directory will be deleted before unpacking new content from the MODPACK or MODS.
+    在从MODPACK或MODS解压新内容之前，`mods`或`plugins`目录中的所有内容将被删除。

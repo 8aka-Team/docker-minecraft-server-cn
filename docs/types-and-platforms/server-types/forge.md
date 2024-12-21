@@ -32,7 +32,7 @@ To use a pre-downloaded Forge installer, place it in a location mounted into the
 
 In both of the cases above, there is no need for the `VERSION` or `FORGE_VERSION` variables.
 
-!!! note
+!!! note "注意"
 
     If an error occurred while installing Forge, it might be possible to resolve by temporarily setting `FORGE_FORCE_REINSTALL` to "true". Be sure to remove that variable after successfully starting the server.
 

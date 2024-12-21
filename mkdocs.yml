@@ -73,7 +73,7 @@ markdown_extensions:
       user: camalot
       repo: mkdocs-test
   - mkdocs-click
-copyright: Copyright &copy; itzg 2024.
+copyright: Copyright &copy; 8aka-Team 2024.
 plugins:
   - search
   - autorefs
@@ -97,3 +97,13 @@ plugins:
   - literate-nav:
       nav_file: README.md
       implicit_index: true
+nav:
+    - 介绍: index.md
+    - 发送命令: commands.md
+    - 数据目录: data-directory.md
+    - 环境变量: variables.md
+    - 配置: /configuration/
+    - 杂项: /misc/
+    - Mod与插件: /mods-and-plugins/
+    - /*
+

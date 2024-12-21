@@ -3,7 +3,7 @@ title: 环境变量
 ---
 
 
-!!! 警告
+!!! warning "警告"
 
     本页列出的变量是手动记录的，可能已过时或不准确。
 
@@ -106,13 +106,13 @@ Aikar进行了一些研究</a>，以找到GC调优的最佳JVM标志，这在更
 <tr>
 <td><code>JVM_DD_OPTS</code></td>
 <td>作为传递多个系统属性作为-D参数的简写，您可以改为传递以逗号分隔的name=value或name:
-value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语法，这些平台不允许在值内使用=）</td>
+value对列表，使用JVM_DD_OPTS。(为管理平台如Plesk提供冒号语法，这些平台不允许在值内使用=)</td>
 <td><code></code></td>
 <td>⬜️</td>
 </tr>
 <tr>
 <td><code>EXTRA_ARGS</code></td>
-<td>通常传递给jar文件的参数（写在文件名之后的那些）</td>
+<td>通常传递给jar文件的参数(写在文件名之后的那些)</td>
 <td><code></code></td>
 <td>⬜️</td>
 </tr>
@@ -224,7 +224,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 			<td>
 				<code>MAX_WORLD_SIZE</code>
 			</td>
-			<td>以半径表示的最大可能大小（以块为单位）。</td>
+			<td>以半径表示的最大可能大小(以块为单位)。</td>
 			<td>
 				<code></code>
 			</td>
@@ -274,7 +274,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 			<td>
 				<code>GENERATE_STRUCTURES</code>
 			</td>
-			<td>定义是否生成结构（如村庄）。</td>
+			<td>定义是否生成结构(如村庄)。</td>
 			<td>
 				<code>true</code>
 			</td>
@@ -344,7 +344,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 			<td>
 				<code>SPAWN_PROTECTION</code>
 			</td>
-			<td>设置非OP无法编辑的区域（0表示禁用）。</td>
+			<td>设置非OP无法编辑的区域(0表示禁用)。</td>
 			<td>
 				<code></code>
 			</td>
@@ -354,7 +354,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 			<td>
 				<code>VIEW_DISTANCE</code>
 			</td>
-			<td>设置服务器发送给客户端的世界数据量，以玩家周围的区块数（半径，非直径）为单位。它决定了服务器端视距。</td>
+			<td>设置服务器发送给客户端的世界数据量，以玩家周围的区块数(半径，非直径)为单位。它决定了服务器端视距。</td>
 			<td>
 				<code></code>
 			</td>
@@ -377,7 +377,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
         <li>creative (创造模式)</li>
         <li>survival (生存模式)</li>
         <li>adventure (冒险模式)</li>
-        <li>spectator (旁观者模式)（Minecraft 1.8或更高版本）</li>
+        <li>spectator (旁观者模式)(Minecraft 1.8或更高版本)</li>
     </ul></td>
     <td><code></code></td>
     <td>⬜️</td>
@@ -516,7 +516,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 </tr>
 <tr>
     <td><code>CONSOLE</code></td>
-    <td>一些较旧的Spigot版本（1.14之前）在分离stdin时需要传递<code>--noconsole</code>。</td>
+    <td>一些较旧的Spigot版本(1.14之前)在分离stdin时需要传递<code>--noconsole</code>。</td>
     <td><code>TRUE</code></td>
     <td>⬜️</td>
 </tr>
@@ -702,7 +702,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 
 ### 自动暂停
 
-!!! note
+!!! note "注意"
 
     自动暂停功能与`EXEC_DIRECTLY=true`不兼容，两者不能同时设置。
 
@@ -736,7 +736,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
         </tr>
         <tr>
             <td><code>AUTOPAUSE_TIMEOUT_KN</code></td>
-            <td>描述端口ping（例如MOTD ping）与进程暂停之间的时间，当在此期间没有客户端连接时</td>
+            <td>描述端口ping(例如MOTD ping)与进程暂停之间的时间，当在此期间没有客户端连接时</td>
             <td><code>120</code></td>
             <td>⬜️</td>
         </tr>
@@ -748,7 +748,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
         </tr>
         <tr>
             <td><code>AUTOPAUSE_KNOCK_INTERFACE</code></td>
-            <td>描述传递给knockd守护进程的接口。如果默认接口不起作用，请在容器内运行ifconfig命令，并从其输出中获取接收传入连接的接口。传递的接口必须在容器内存在。使用回环接口（lo）可能不会产生预期结果。</td>
+            <td>描述传递给knockd守护进程的接口。如果默认接口不起作用，请在容器内运行ifconfig命令，并从其输出中获取接收传入连接的接口。传递的接口必须在容器内存在。使用回环接口(lo)可能不会产生预期结果。</td>
             <td><code>eth0</code></td>
             <td>⬜️</td>
         </tr>
@@ -763,7 +763,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 
 ### 自动停止
 
-!!! note
+!!! note "注意"
 
     自动停止功能与自动暂停功能不兼容，因为它们基本上会相互抵消。
 
@@ -812,7 +812,7 @@ value对列表，使用JVM_DD_OPTS。（为管理平台如Plesk提供冒号语�
 
 ### CurseForge
 
-!!! tip
+!!! tip "提示"
 
     更多详情和最新信息，请参阅[主文档页面](types-and-platforms/mod-platforms/auto-curseforge.md)。
 

@@ -1,20 +1,16 @@
+# 杂项
 
-## Running with a custom server JAR
+## 使用自定义服务器 JAR 运行
 
-If you would like to run a custom server JAR, set `-e TYPE=CUSTOM` and pass the custom server
-JAR via `CUSTOM_SERVER`. It can either be a URL or a container path to an existing JAR file.
+如果您想运行自定义服务器 JAR，请设置 `-e TYPE=CUSTOM` 并通过 `CUSTOM_SERVER` 传递自定义服务器 JAR。它可以是 URL 或容器路径到现有的 JAR 文件。
 
-If it is a URL, it will only be downloaded into the `/data` directory if it wasn't already. As
-such, if you need to upgrade or re-download the JAR, then you will need to stop the container,
-remove the file from the container's `/data` directory, and start again.
+如果是 URL，它将仅在尚未下载到 `/data` 目录时下载。因此，如果您需要升级或重新下载 JAR，则需要停止容器，从容器的 `/data` 目录中删除文件，然后重新启动。
 
-## Force re-download of the server file
+## 强制重新下载服务器文件
 
-For VANILLA, FORGE, BUKKIT, SPIGOT, PAPER, CURSEFORGE, SPONGEVANILLA server types, set
-`$FORCE_REDOWNLOAD` to some value (e.g. 'true) to force a re-download of the server file for
-the particular server type. by adding a `-e FORCE_REDOWNLOAD=true` to your command-line.
+对于 VANILLA、FORGE、BUKKIT、SPIGOT、PAPER、CURSEFORGE、SPONGEVANILLA 服务器类型，设置 `$FORCE_REDOWNLOAD` 为某个值(例如 'true')以强制重新下载特定服务器类型的服务器文件。通过在命令行中添加 `-e FORCE_REDOWNLOAD=true` 来实现。
 
-For example, with PaperSpigot, it would look something like this:
+例如，使用 PaperSpigot 时，它看起来像这样：
 
 ```
 docker run -d -v /path/on/host:/data \
@@ -22,134 +18,129 @@ docker run -d -v /path/on/host:/data \
     -p 25565:25565 -e EULA=TRUE --name mc itzg/minecraft-server
 ```
 
-## Running as alternate user/group ID
+## 以备用用户/组 ID 运行
 
-By default, the container will switch to user ID 1000 and group ID 1000;
-however, you can override those values by setting `UID` and/or `GID` as environmental entries, during the `docker run` command.
+默认情况下，容器将切换到用户 ID 1000 和组 ID 1000；但是，您可以通过在 `docker run` 命令期间设置 `UID` 和/或 `GID` 作为环境条目来覆盖这些值。
 
     -e UID=1234
     -e GID=1234
 
-The container will also skip user switching if the `--user`/`-u` argument
-is passed to `docker run`.
+如果将 `--user`/`-u` 参数传递给 `docker run`，容器也会跳过用户切换。
 
-## Extra Arguments
+## 额外参数
 
-Arguments that would usually be passed to the jar file (those which are written after the filename) can be passed via the `EXTRA_ARGS` environment variable.
+通常传递给 jar 文件的参数(写在文件名之后的那些)可以通过 `EXTRA_ARGS` 环境变量传递。
 
-See [Custom worlds directory path](../misc/world-data.md#custom-worlds-directory-path) for an example.
+请参阅 [自定义世界目录路径](../misc/world-data.md#custom-worlds-directory-path) 示例。
 
-## Interactive and Color Console
+## 交互式和彩色控制台
 
-When RCON is enabled, which is the default, and [TTY](https://docs.docker.com/compose/compose-file/05-services/#tty) is enabled on the container, then some server types will output colorized logs and provide a fully interactive console. To access the interactive console, use [`docker attach`](https://docs.docker.com/engine/reference/commandline/container_attach/) (not `exec`). When finished, make sure to use the sequence Control-P, Control-Q to detach without stopping the container.
+当启用 RCON 时(默认启用)，并且在容器上启用了 [TTY](https://docs.docker.com/compose/compose-file/05-services/#tty)，某些服务器类型将输出彩色日志并提供完全交互式控制台。要访问交互式控制台，请使用 [`docker attach`](https://docs.docker.com/engine/reference/commandline/container_attach/)(不是 `exec`)。完成后，确保使用 Control-P, Control-Q 序列分离而不停止容器。
 
-If this behavior interferes with the log content, then disable TTY or remove the setting entirely since the default is disabled. In a compose file, set the service's `tty` parameter to `false`. On the `docker run` command-line remove the `-t` argument.
+如果此行为干扰了日志内容，则禁用 TTY 或完全删除设置，因为默认情况下是禁用的。在 compose 文件中，将服务的 `tty` 参数设置为 `false`。在 `docker run` 命令行中删除 `-t` 参数。
 
-## Server Shutdown Options
+## 服务器关闭选项
 
-To allow time for players to finish what they're doing during a graceful server shutdown, set `STOP_SERVER_ANNOUNCE_DELAY` to a number of seconds to delay after an announcement is posted by the server.
+为了在服务器正常关闭期间给玩家时间完成他们正在做的事情，设置 `STOP_SERVER_ANNOUNCE_DELAY` 为延迟的秒数，延迟在服务器发布广播之后。
 
-!!! warning "Increase stop grace period"
+!!! warning "增加停止延迟"
 
-    The Docker stop grace period must be increased to a value longer than the announce delay. The value to use that is longer than announce delay will vary based upon the amount of time it takes for final world data saving. If the container exits with exit code 137, then that indicates a longer grace period is needed. 
+    Docker 停止延迟必须增加到比广播延迟更长的值。要使用的值将根据最终世界数据保存所需的时间而变化。如果容器以退出代码 137 退出，则表示需要更长的延迟。
     
-    The grace period can be increased using [the -t option on docker-compose down](https://docs.docker.com/compose/reference/down/) or set the [stop_grace_period](https://docs.docker.com/compose/compose-file/05-services/#stop_grace_period) in the compose file.
+    可以使用 [docker-compose down 的 -t 选项](https://docs.docker.com/compose/reference/down/) 增加延迟，或在 compose 文件中设置 [stop_grace_period](https://docs.docker.com/compose/compose-file/05-services/#stop_grace_period)。
 
-## Configuration Options for Minecraft Server Health Monitoring
+## Minecraft 服务器健康监控的配置选项
 
-The image tags include specific variables to simplify configuration for monitoring the health of a Minecraft server:
+图像标签包含特定变量，以简化 Minecraft 服务器健康监控的配置：
 
-- `-e SERVER_HOST=localhost` : This variable sets the host address of the Minecraft server to be monitored. By default, it is set to `localhost`, but you can replace it with the actual hostname or IP address of your Minecraft server.
+- `-e SERVER_HOST=localhost`：此变量设置要监控的 Minecraft 服务器的主机地址。默认情况下，它设置为 `localhost`，但您可以将其替换为 Minecraft 服务器的实际主机名或 IP 地址。
 
-- `-e SERVER_PORT=25565` : This variable sets the port number on which the Minecraft server is running. By default, Minecraft servers run on port 25565, but if your server is configured to use a different port, you should replace `25565` with the correct port number. This helps the monitoring system to accurately check the health status of the Minecraft server on the specified port.
+- `-e SERVER_PORT=25565`：此变量设置 Minecraft 服务器运行的端口号。默认情况下，Minecraft 服务器运行在端口 25565，但如果您的服务器配置为使用不同的端口，您应将 `25565` 替换为正确的端口号。这有助于监控系统在指定端口上准确检查 Minecraft 服务器的健康状态。
 
-## OpenJ9 Specific Options
+## OpenJ9 特定选项
 
-The openj9 image tags include specific variables to simplify configuration:
+openj9 构建标签包含特定变量，以简化配置：
 
-- `-e TUNE_VIRTUALIZED=TRUE` : enables the option to
-  [optimize for virtualized environments](https://www.eclipse.org/openj9/docs/xtunevirtualized/)
-- `-e TUNE_NURSERY_SIZES=TRUE` : configures nursery sizes where the initial size is 50%
-  of the `MAX_MEMORY` and the max size is 80%.
+- `-e TUNE_VIRTUALIZED=TRUE`：启用 [优化虚拟化环境](https://www.eclipse.org/openj9/docs/xtunevirtualized/) 的选项
+- `-e TUNE_NURSERY_SIZES=TRUE`：配置 nursery 大小，其中初始大小为 `MAX_MEMORY` 的 50%，最大大小为 80%。
 
-## Enabling rolling logs
+## 启用滚动日志
 
-By default the vanilla log file will grow without limit. The logger can be reconfigured to use a rolling log files strategy by using:
+默认情况下，vanilla 日志文件将无限增长。可以通过使用以下命令将记录器重新配置为使用滚动日志文件策略：
 
 ```
   -e ENABLE_ROLLING_LOGS=true
 ```
 
-> **NOTE** this will interfere with interactive/color consoles [as described in the section above](#interactive-and-color-console)
+> **注意** 这将干扰交互式/彩色控制台 [如上节所述](#interactive-and-color-console)
 
-## Timezone Configuration
+## 时区配置
 
-You can configure the timezone to match yours by setting the `TZ` environment variable:
+您可以通过设置 `TZ` 环境变量来配置时区以匹配您的时区：
 
         -e TZ=Europe/London
 
-such as:
+例如：
 
         docker run -d -it -e TZ=Europe/London -p 25565:25565 --name mc itzg/minecraft-server
 
-Or mounting `/etc/timezone` as readonly (not supported on Windows):
+或者挂载 `/etc/timezone` 为只读(不支持 Windows)：
 
         -v /etc/timezone:/etc/timezone:ro
 
-such as:
+例如：
 
         docker run -d -it -v /etc/timezone:/etc/timezone:ro -p 25565:25565 --name mc itzg/minecraft-server
 
-## HTTP Proxy
+## HTTP 代理
 
-You may configure the use of an HTTP/HTTPS proxy by passing the proxy's URL via the `PROXY`
-environment variable. In [the example compose file](https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-proxied.yml) it references
-a companion squid proxy by setting the equivalent of
+您可以通过将代理的 URL 通过 `PROXY` 环境变量传递来配置使用 HTTP/HTTPS 代理。在 [示例 compose 文件](https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-proxied.yml) 中，它通过设置等效的
 
     -e PROXY=proxy:3128
 
-## Using "noconsole" option
+引用了伴随的 squid 代理。
 
-Some older versions (pre-1.14) of Spigot required `--noconsole` to be passed when detaching stdin, which can be done by setting `-e CONSOLE=FALSE`.
+## 使用 "noconsole" 选项
 
-## Explicitly disable GUI
+一些较旧版本的 Spigot(1.14 之前)需要传递 `--noconsole` 以在分离 stdin 时使用，这可以通过设置 `-e CONSOLE=FALSE` 来实现。
 
-Some older servers get confused and think that the GUI interface is enabled. You can explicitly
-disable that by passing `-e GUI=FALSE`.
+## 显式禁用 GUI
 
-## Stop Duration
+一些较旧的服务器会混淆并认为 GUI 界面已启用。您可以通过传递 `-e GUI=FALSE` 来显式禁用它。
 
-When the container is signalled to stop, the Minecraft process wrapper will attempt to send a "stop" command via RCON or console and waits for the process to gracefully finish. By default it waits 60 seconds, but that duration can be configured by setting the environment variable `STOP_DURATION` to the number of seconds.
+## 停止持续时间
 
-## Setup only
+当容器收到停止信号时，Minecraft 进程包装器将尝试通过 RCON 或控制台发送 "stop" 命令，并等待进程优雅地结束。默认情况下，它等待 60 秒，但可以通过将环境变量 `STOP_DURATION` 设置为秒数来配置该持续时间。
 
-If you are using a host-attached data directory, then you can have the image setup the Minecraft server files and stop prior to launching the server process by setting `SETUP_ONLY` to `true`. 
-    
-## Enable Flare Flags
-    
-To enable the JVM flags required to fully support the [Flare profiling suite](https://blog.airplane.gg/flare), set the following variable:
-    
+## 仅设置
+
+如果您使用的是主机附加的数据目录，则可以通过将 `SETUP_ONLY` 设置为 `true` 来让图像设置 Minecraft 服务器文件并在启动服务器进程之前停止。
+
+## 启用 Flare 标志
+
+要启用完全支持 [Flare 分析套件](https://blog.airplane.gg/flare) 所需的 JVM 标志，请设置以下变量：
+
     -e USE_FLARE_FLAGS=true
-    
-Flare is built-in to Pufferfish/Purpur, and is available in [plugin form](https://github.com/TECHNOVE/FlarePlugin) for other server types.
 
-## Enable support for optimized SIMD operations
+Flare 内置于 Pufferfish/Purpur 中，并且以 [插件形式](https://github.com/TECHNOVE/FlarePlugin) 可用于其他服务器类型。
 
-To enable support for optimized SIMD operations, the JVM flag can be set with the following variable:
+## 启用对优化 SIMD 操作的支持
+
+要启用对优化 SIMD 操作的支持，可以使用以下变量设置 JVM 标志：
 
     -e USE_SIMD_FLAGS=true
 
-SIMD optimized operations are supported by Pufferfish and Purpur.
+Pufferfish 和 Purpur 支持 SIMD 优化操作。
 
-## Enable timestamps in init logs
+## 在初始化日志中启用时间戳
 
-Before the container starts the Minecraft Server its output is prefixed with `[init]`, such as
+在容器启动 Minecraft 服务器之前，其输出带有 `[init]` 前缀，例如
 
 ```
 [init] Starting the Minecraft server...
 ```
 
-To also include the timestamp with each log, set `LOG_TIMESTAMP` to "true". The log output will then look like:
+要为每个日志添加时间戳，请将 `LOG_TIMESTAMP` 设置为 "true"。日志输出将如下所示：
 
 ```
 [init] 2022-02-05 16:58:33+00:00 Starting the Minecraft server...

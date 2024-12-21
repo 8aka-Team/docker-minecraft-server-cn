@@ -23,7 +23,7 @@ If you are hosting your own copy of Bukkit/Spigot you can override the download 
 - -e BUKKIT_DOWNLOAD_URL=<url>
 - -e SPIGOT_DOWNLOAD_URL=<url>
 
-!!! note
+!!! note "注意"
 
     Some of the `VERSION` values are not as intuitive as you would think, so make sure to click into the version entry to find the **exact** version needed for the download. For example, "1.8" is not sufficient since their download naming expects `1.8-R0.1-SNAPSHOT-latest` exactly.
 

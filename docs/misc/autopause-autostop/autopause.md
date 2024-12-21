@@ -1,64 +1,64 @@
-# Auto-Pause
+# 自动暂停
 
-An auto-pause functionality is provided that monitors whether clients are connected to the server. If a client is not connected for a specified time, the Java process is put into a pause state. When a client attempts to connect while the process is paused, then process will be restored to a running state. The experience for the client does not change. This feature can be enabled by setting the environment variable `ENABLE_AUTOPAUSE` to "true".
+提供了一个自动暂停功能，用于监控客户端是否连接到服务器。如果在指定时间内没有客户端连接，Java进程将进入暂停状态。当客户端在进程暂停时尝试连接，进程将恢复到运行状态。客户端的体验不会改变。可以通过将环境变量`ENABLE_AUTOPAUSE`设置为"true"来启用此功能。
 
-!!! important
+!!! 重要
 
-    **You must greatly increase or disable max-tick-time watchdog functionality.** From the server's point of view, the pausing causes a single tick to take as long as the process is stopped, so the server watchdog might intervene after the process is continued, possibly forcing a container restart. To prevent this, ensure that the `max-tick-time` in the `server.properties` file is set to a very large value or -1 to disable it entirely, which is highly recommended. That can be set with `MAX_TICK_TIME` as described in [the section below](../../configuration/server-properties.md#max-tick-time).
+    **您必须大大增加或禁用max-tick-time看门狗功能。** 从服务器的角度来看，暂停会导致单个tick的持续时间与进程停止的时间一样长，因此服务器看门狗可能会在进程继续后介入，可能会强制容器重启。为防止这种情况，请确保在`server.properties`文件中将`max-tick-time`设置为非常大的值或-1以完全禁用它，这是强烈推荐的。可以在[下面的部分](../../configuration/server-properties.md#max-tick-time)中描述的`MAX_TICK_TIME`进行设置。
 
-    Non-vanilla versions might have their own configuration file, you might have to disable their watchdogs separately. For PaperMC servers, you need to send the JVM flag `-Ddisable.watchdog=true`, this can be done with the docker env variable `-e JVM_DD_OPTS=disable.watchdog:true`
+    非原版版本可能有自己的配置文件，您可能需要单独禁用它们的看门狗。对于PaperMC服务器，您需要发送JVM标志`-Ddisable.watchdog=true`，这可以通过docker环境变量`-e JVM_DD_OPTS=disable.watchdog:true`来完成。
 
-    On startup the `server.properties` file is checked and, if applicable, a warning is printed to the terminal. When the server is created (no data available in the persistent directory), the properties file is created with the Watchdog disabled.
+    在启动时，会检查`server.properties`文件，如果适用，会在终端打印警告。当服务器创建时(持久目录中没有数据)，属性文件会创建并禁用看门狗。
 
-The utility used to wake the server (`knock(d)`) works at network interface level. So the correct interface has to be set using the `AUTOPAUSE_KNOCK_INTERFACE` variable when using non-default networking environments (e.g. host-networking, Portainer oder NAS solutions). See the description of the variable below.
+用于唤醒服务器的工具(`knock(d)`)在网络接口级别工作。因此，在使用非默认网络环境(例如主机网络、Portainer或NAS解决方案)时，必须使用`AUTOPAUSE_KNOCK_INTERFACE`变量设置正确的接口。请参阅下面变量的描述。
 
-A file called `.paused` is created in `/data` directory when the server is paused and removed when the server is resumed. Other services may check for this file's existence before waking the server.
+当服务器暂停时，会在`/data`目录中创建一个名为`.paused`的文件，并在服务器恢复时删除。其他服务可以在唤醒服务器之前检查此文件的存在。
 
-A `.skip-pause` file can be created in the `/data` directory to make the server skip autopausing, for as long as the file is present. The autopause timer will also be reset.
+可以在`/data`目录中创建一个`.skip-pause`文件，使服务器在文件存在期间跳过自动暂停。自动暂停计时器也会重置。
 
-A starting, example compose file has been provided in [the examples](https://github.com/itzg/docker-minecraft-server/blob/master/examples/autopause/compose.yml).
+在[示例](https://github.com/itzg/docker-minecraft-server/blob/master/examples/autopause/compose.yml)中提供了一个启动示例compose文件。
 
-Auto-pause is not compatible with `EXEC_DIRECTLY=true` and the two cannot be set together.
+自动暂停与`EXEC_DIRECTLY=true`不兼容，两者不能同时设置。
 
-!!! note 
+!!! note "注意"
 
-    When configuring kubernetes readiness/liveness health checks with auto-pause enabled, be sure to reference the `mc-health` wrapper script rather than `mc-status` directly.
+    在配置启用自动暂停的kubernetes readiness/liveness健康检查时，请确保引用`mc-health`包装脚本而不是直接引用`mc-status`。
 
-## Additional configuration
+## 附加配置
 
-The following environment variables define the behaviour of auto-pausing:
+以下环境变量定义了自动暂停的行为：
 
-- `AUTOPAUSE_TIMEOUT_EST`, default `3600` (seconds)
-  describes the time between the last client disconnect and the pausing of the process (read as timeout established)
-- `AUTOPAUSE_TIMEOUT_INIT`, default `600` (seconds)
-  describes the time between server start and the pausing of the process, when no client connects inbetween (read as timeout initialized)
-- `AUTOPAUSE_TIMEOUT_KN`, default `120` (seconds)
-  describes the time between knocking of the port (e.g. by the main menu ping) and the pausing of the process, when no client connects inbetween (read as timeout knocked)
-- `AUTOPAUSE_PERIOD`, default `10` (seconds)
-  describes period of the daemonized state machine, that handles the pausing of the process (resuming is done independently)
-- `AUTOPAUSE_KNOCK_INTERFACE`, default `eth0`
-  <br>Describes the interface passed to the `knockd` daemon. If the default interface does not work, run the `ifconfig` command inside the container and derive the interface receiving the incoming connection from its output. The passed interface must exist inside the container. Using the loopback interface (`lo`) does likely not yield the desired results.
+- `AUTOPAUSE_TIMEOUT_EST`，默认`3600`(秒)
+  描述最后一个客户端断开连接与进程暂停之间的时间(读作timeout established)
+- `AUTOPAUSE_TIMEOUT_INIT`，默认`600`(秒)
+  描述服务器启动与进程暂停之间的时间，当在此期间没有客户端连接时(读作timeout initialized)
+- `AUTOPAUSE_TIMEOUT_KN`，默认`120`(秒)
+  描述端口敲击(例如主菜单ping)与进程暂停之间的时间，当在此期间没有客户端连接时(读作timeout knocked)
+- `AUTOPAUSE_PERIOD`，默认`10`(秒)
+  描述处理进程暂停的守护进程状态机的周期(恢复是独立完成的)
+- `AUTOPAUSE_KNOCK_INTERFACE`，默认`eth0`
+  <br>描述传递给`knockd`守护进程的接口。如果默认接口不起作用，请在容器内运行`ifconfig`命令，并从其输出中推导出接收传入连接的接口。传递的接口必须在容器内存在。使用回环接口(`lo`)可能不会产生预期结果。
 
-!!! tip
+!!! tip "提示"
 
-    To troubleshoot, add `DEBUG_AUTOPAUSE=true` to see additional output
+    要进行故障排除，请添加`DEBUG_AUTOPAUSE=true`以查看额外输出
 
-## Rootless Auto-Pause
+## 无Root自动暂停
 
-If you're running the container as rootless, then it is necessary to add the `CAP_NET_RAW` capability to the container, such as using [the `cap_add` service field](https://docs.docker.com/compose/compose-file/05-services/#cap_add) in a compose file or [`--cap-add` docker run argument](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities). It may also be necessary to set the environment variable `SKIP_SUDO` to "true". 
+如果您以无Root方式运行容器，则需要向容器添加`CAP_NET_RAW`功能，例如使用compose文件中的[`cap_add`服务字段](https://docs.docker.com/compose/compose-file/05-services/#cap_add)或[`--cap-add` docker run参数](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities)。可能还需要将环境变量`SKIP_SUDO`设置为"true"。
 
-You might need to set change the default port forwarder from RootlessKit to slirp4netns.
+您可能需要将默认端口转发器从RootlessKit更改为slirp4netns。
 
-For Docker, see the following for setup:
+对于Docker，请参阅以下设置：
 
 - https://docs.docker.com/engine/security/rootless/#networking-errors
 - https://rootlesscontaine.rs/getting-started/docker/#changing-the-port-forwarder
 
-For Podman, see the following for setup:
+对于Podman，请参阅以下设置：
 - https://rootlesscontaine.rs/getting-started/podman/#changing-the-port-forwarder
 
 
-!!! example "Using docker run"
+!!! 示例 "使用docker run"
 
     -e AUTOPAUSE_KNOCK_INTERFACE=tap0 --cap-add=CAP_NET_RAW --network slirp4netns:port_handler=slirp4netns
 

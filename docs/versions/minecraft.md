@@ -21,6 +21,6 @@ When using "LATEST" or "SNAPSHOT" an upgrade can be performed by simply restarti
 During the next startup, if a newer version is available from the respective release channel, then
 the new server jar file is downloaded and used. 
 
-!!! note
+!!! note "注意"
 
     Over time you might see older versions of the server jar remain in the `/data` directory. It is safe to remove those.

@@ -1,86 +1,88 @@
+# 世界数据
 
-## Downloadable world
+## 可下载的世界
 
-Instead of mounting the `/data` volume, you can instead specify the URL of a ZIP or compressed TAR file containing an archived world. It will be searched for a file `level.dat` and the containing subdirectory moved to the directory named by `$LEVEL`. This means that most of the archived Minecraft worlds downloadable from the Internet will already be in the correct format.
+你可以指定一个包含存档世界的ZIP或压缩TAR文件的URL，而不是挂载`/data`卷。系统会搜索文件`level.dat`，并将包含该文件的子目录移动到由`$LEVEL`指定的目录中。这意味着大多数从互联网下载的Minecraft世界存档已经处于正确的格式。
 
     docker run -d -e WORLD=http://www.example.com/worlds/MySave.zip ...
 
-!!! note
+!!! note "注意"
 
-    This URL must be accessible from inside the container. Therefore, you should use an IP address or a globally resolvable FQDN, or else the name of a linked container.
+    该URL必须可以从容器内部访问。因此，你应该使用IP地址或全局可解析的FQDN，或者链接到一个容器的名称。
 
-!!! note
+!!! note "注意"
 
-    If the archive contains more than one `level.dat`, then the one to select can be picked with `WORLD_INDEX`, which defaults to 1.
+    如果存档包含多个`level.dat`，则可以使用`WORLD_INDEX`选择要使用的文件，默认值为1。
 
-## Cloning world from a container path
+## 从容器路径克隆世界
 
-The `WORLD` option can also be used to reference a directory, zip file, or compressed tar file that will be used as a source to clone or extract the world directory.
+`WORLD`选项也可以用于引用一个目录、zip文件或压缩tar文件，这些文件将作为源来克隆或提取世界目录。
 
-For example, the following would initially clone the world's content from `/worlds/basic`. Also notice in the example that you should use a read-only volume attachment to ensure the clone source remains pristine.
+例如，以下命令将从`/worlds/basic`初始克隆世界内容。请注意，在示例中，你应该使用只读卷挂载以确保克隆源保持原始状态。
 
 ```
 docker run ... -v $HOME/worlds:/worlds:ro -e WORLD=/worlds/basic
 ```
 
-The following diagram shows how this option can be used in a compose deployment with a relative directory:
+下图展示了如何在compose部署中使用相对目录的选项：
 
 ![](../img/world-copy-compose-project.drawio.png)
 
-## Overwrite world on start
-The world will only be downloaded or copied if it doesn't exist already. Set `FORCE_WORLD_COPY=TRUE` to force overwrite the world on every server start.
+## 启动时覆盖世界
 
-## Custom worlds directory path
-To set a custom worlds directory for the Multiverse plugin on a baremetal server, you'd pass the `--world-dir` argument after the jar file.
-In order to accomplish the same in a containerized server, set the `EXTRA_ARGS` environment variable in your command line or docker compose yaml to the same argument string. For example:
+只有在世界不存在时才会下载或复制世界。设置`FORCE_WORLD_COPY=TRUE`以强制在每次服务器启动时覆盖世界。
+
+## 自定义世界目录路径
+
+要在服务器上为Multiverse插件设置自定义世界目录，你可以在jar文件后传递`--world-dir`参数。为了在容器化服务器中实现相同功能，请在命令行或docker compose yaml中设置`EXTRA_ARGS`环境变量为相同的参数字符串。例如：
 
 ```
 docker run -d -e EXTRA_ARGS='--world-dir ./worlds/'
 ```
-`--world-container`, `-W`, and `--universe` are aliases to `--world-dir` and can also be used.
+`--world-container`、`-W`和`--universe`是`--world-dir`的别名，也可以使用。
 
-## Datapacks
+## 数据包
 
-Datapacks can be installed in a similar manner to mods/plugins. There are many environment variables which function in the same way they do for [mods](../mods-and-plugins/index.md):
+数据包的安装方式与模组/插件类似。有许多环境变量以与[模组](../mods-and-plugins/index.md)相同的方式工作：
 
-* `DATAPACKS`: comma-separated list of zip file URL, zip file in container, or directory in container
-* `DATAPACKS_FILE`: a text file within the container where each line is a zip file URL, zip file in container, or directory in container
-* `REMOVE_OLD_DATAPACKS`: if "true" the datapacks directory is removed of everything matching `REMOVE_OLD_DATAPACKS_INCLUDE`, but excluding `REMOVE_OLD_DATAPACKS_EXCLUDE` no deeper than `REMOVE_OLD_DATAPACKS_DEPTH`
-* `REMOVE_OLD_DATAPACKS_DEPTH`: default is 16
-* `REMOVE_OLD_DATAPACKS_INCLUDE`: default is `*.zip`
-* `REMOVE_OLD_DATAPACKS_EXCLUDE`: default is empty
+* `DATAPACKS`：逗号分隔的zip文件URL、容器内的zip文件或容器内的目录列表
+* `DATAPACKS_FILE`：容器内的文本文件，其中每行是一个zip文件URL、容器内的zip文件或容器内的目录
+* `REMOVE_OLD_DATAPACKS`：如果为“true”，则删除与`REMOVE_OLD_DATAPACKS_INCLUDE`匹配但排除`REMOVE_OLD_DATAPACKS_EXCLUDE`的数据包目录中的所有内容，深度不超过`REMOVE_OLD_DATAPACKS_DEPTH`
+* `REMOVE_OLD_DATAPACKS_DEPTH`：默认值为16
+* `REMOVE_OLD_DATAPACKS_INCLUDE`：默认值为`*.zip`
+* `REMOVE_OLD_DATAPACKS_EXCLUDE`：默认值为空
 
-Datapacks will be placed in `/data/$LEVEL/datapacks`
+数据包将放置在`/data/$LEVEL/datapacks`中
 
 ## VanillaTweaks
 
-[VanillaTweaks](https://vanillatweaks.net/) datapacks, crafting tweaks, and resource packs can be installed with a share code from the website **OR** a json file to specify packs to download and install. Datapacks and crafting tweaks will be installed into the current world directory specified by `$LEVEL`. As new versions of the packs are retrieved the previous versions will automatically be cleaned up.
+[VanillaTweaks](https://vanillatweaks.net/)数据包、制作调整和资源包可以通过网站的分享代码或指定要下载和安装的包的json文件来安装。数据包和制作调整将安装到由`$LEVEL`指定的当前世界目录中。当检索到新版本的包时，旧版本将自动清理。
 
-The share code is the part following the hash sign, as shown here:
+分享代码是哈希符号后的部分，如下所示：
 
 ```
 https://vanillatweaks.net/share/#MGr52E
                                  ------
                                   |
-                                  +- share code MGr52E
+                                  +- 分享代码 MGr52E
 ```
 
-Accepted Parameters:
+接受的参数：
 
-- `VANILLATWEAKS_FILE`: comma separated list of JSON VanillaTweak pack files accessible within the container
-- `VANILLATWEAKS_SHARECODE`: comma separated list of share codes
+- `VANILLATWEAKS_FILE`：逗号分隔的JSON VanillaTweak包文件列表，可在容器内访问
+- `VANILLATWEAKS_SHARECODE`：逗号分隔的分享代码列表
 
-Example of expected VanillaTweaks share codes:
+预期的VanillaTweaks分享代码示例：
 
-!!! note
+!!! note "注意"
 
-    ResourcePacks, DataPacks, and CraftingTweaks all have separate sharecodes
+    资源包、数据包和制作调整都有单独的分享代码
 
 ``` yaml
 VANILLATWEAKS_SHARECODE: MGr52E,tF1zL2,LnEDwT
 ```
 
-Example of expected VanillaTweaks files:
+预期的VanillaTweaks文件示例：
 
 ``` yaml
 VANILLATWEAKS_FILE: /config/vt-datapacks.json,/config/vt-craftingtweaks.json,/config/vt-resourcepacks.json

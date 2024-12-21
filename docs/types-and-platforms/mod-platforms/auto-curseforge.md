@@ -32,7 +32,7 @@ To manage a CurseForge modpack automatically with upgrade support, pinned or lat
     docker run --env-file=.env itzg/minecraft-server
     ```
 
-!!! note
+!!! note "注意"
     Be sure to use the appropriate [image tag for the Java version compatible with the modpack](../../versions/java.md).
     
     Most modpacks require a good amount of memory, so it best to set `MEMORY` to at least "4G" since the default is only 1 GB.
@@ -164,7 +164,7 @@ Quite often there are mods that need to be excluded, such as ones that did not p
 
 Mods can be excluded by passing a comma or space delimited list of **project** slugs or IDs via `CF_EXCLUDE_MODS`. Similarly, there are some mods that are incorrectly tagged as client only. For those, pass the **project** slugs or IDs via `CF_FORCE_INCLUDE_MODS`. These lists will be combined with the content of the exclude/include file, if given.
 
-!!! note
+!!! note "注意"
     `CF_FORCE_INCLUDE_MODS` will not download additional mods.
     
     For additional mods, refer to [the `CURSEFORGE_FILES` variable](../../mods-and-plugins/curseforge-files.md).

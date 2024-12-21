@@ -6,7 +6,7 @@ title: 数据目录
 
 ![](img/level-vs-world.drawio.png)
 
-!!! note
+!!! note "注意"
 
     容器路径`/data`已预先声明为卷，因此如果您不进行任何操作，它将被分配为一个匿名卷。因此，当容器被移除时，它也会被移除。
 
@@ -24,7 +24,7 @@ title: 数据目录
 以这种方式挂载后，您可以停止服务器，编辑挂载目录下的配置，然后重新启动服务器以应用新的配置。
 
 !!! important "无Root、Podman、SELinux、AppArmor 使用"
-    当运行无Root容器（如使用Podman）或在系统上使用SELinux/AppArmor时，请在卷映射后附加`:Z`。例如：
+    当运行无Root容器(如使用Podman)或在系统上使用SELinux/AppArmor时，请在卷映射后附加`:Z`。例如：
 
     ```
     /home/user/minecraft-data:/data:Z
@@ -87,6 +87,6 @@ docker run -d -it --name mc-new -v mc:/data -p 25565:25565 -e EULA=TRUE -e MEMOR
 docker inspect -f "{{json .Mounts}}" CONTAINER_NAME_OR_ID
 ```
 
-!!! note
+!!! note "注意"
 
     在Windows上使用WSL时，卷路径为`\\wsl$\docker-desktop-data\data\docker\volumes`

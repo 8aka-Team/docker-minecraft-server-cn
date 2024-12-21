@@ -1,13 +1,12 @@
-# Examples
+# 示例
 
-Various examples are [maintained in the repository](https://github.com/itzg/docker-minecraft-server/tree/master/examples). The sections below highlight a few particular ones.
+各种示例都[保存在仓库中](https://github.com/itzg/docker-minecraft-server/tree/master/examples)。下面的章节重点介绍了一些特定的示例。
 
-## Bedrock compatible server
+## 兼容基岩版的服务器
 
-Using the [GeyserMC plugin](https://geysermc.org/) with a Paper server (or similar) "enables clients from Minecraft Bedrock Edition to join your Minecraft Java server". The example also includes [Floodgate](https://wiki.geysermc.org/floodgate/) which "allows Xbox Live authenticated Bedrock users to join without a Java Edition account". 
+使用[GeyserMC插件](https://geysermc.org/)与Paper服务器(或类似服务器)“使Minecraft基岩版的客户端能够加入你的Minecraft Java服务器”。该示例还包括[Floodgate](https://wiki.geysermc.org/floodgate/)，它“允许经过Xbox Live认证的基岩版用户无需Java版账户即可加入”。
 
 ```yaml
-
 services:
   mc:
     image: itzg/minecraft-server
@@ -24,11 +23,11 @@ services:
       - ./data:/data
 ```
 
-[Source](https://github.com/itzg/docker-minecraft-server/blob/master/examples/geyser/docker-compose.yml)
+[来源](https://github.com/itzg/docker-minecraft-server/blob/master/examples/geyser/docker-compose.yml)
 
-## Lazymc - Put your Minecraft server to rest when idle
+## Lazymc - 在空闲时让Minecraft服务器休息
 
-With [lazymc-docker-proxy](https://github.com/joesturge/lazymc-docker-proxy) you are able to use [lazymc](https://github.com/timvisee/lazymc) with the minecraft container.
+通过[lazymc-docker-proxy](https://github.com/joesturge/lazymc-docker-proxy)，你能够将[lazymc](https://github.com/timvisee/lazymc)与Minecraft容器一起使用。
 
 ```yaml
 services:
@@ -36,33 +35,30 @@ services:
     container_name: lazymc
     image: ghcr.io/joesturge/lazymc-docker-proxy:latest
     environment:
-      # Point to the service name of the Minecraft server
+      # 指向Minecraft服务器的服务名称
       SERVER_ADDRESS: mc:25565
-      # Required to find the container to manage it
+      # 必须找到要管理的容器
       LAZYMC_GROUP: mc
     restart: unless-stopped
     volumes:
-      # you should mount the minecraft server dir under /server, using read only.
+      # 你应该将Minecraft服务器目录挂载到/server下，使用只读模式。
       - data:/server:ro
-      # you need to supply the docker socket, so that the container can run docker command
+      # 你需要提供docker socket，以便容器可以运行docker命令
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
-      # lazymc-docker-proxy acts as a proxy, so there is
-      # no need to expose the server port on the Minecraft container
+      # lazymc-docker-proxy充当代理，因此不需要在Minecraft容器上暴露服务器端口
       - "25565:25565"
 
-  # Standard Docker Minecraft server, also works with other server types
+  # 标准的Docker Minecraft服务器，也适用于其他服务器类型
   mc:
     image: itzg/minecraft-server:java21
     container_name: minecraft-server
-    # We need to add a label here so that lazymc-docker-proxy knows which
-    # container to manage
+    # 我们需要在这里添加一个标签，以便lazymc-docker-proxy知道要管理哪个容器
     labels:
       - lazymc.group=mc
     tty: true
     stdin_open: true
-    # This container should be managed solely by the lazymc container
-    # so set restart to no, or else the container will start again...
+    # 这个容器应仅由lazymc容器管理，因此将重启设置为no，否则容器会再次启动...
     restart: no
     environment:
       EULA: "TRUE"
@@ -72,12 +68,13 @@ services:
 volumes:
   data:
 ```
-[Source](https://github.com/joesturge/lazymc-docker-proxy/blob/master/docker-compose.yaml)
+[来源](https://github.com/joesturge/lazymc-docker-proxy/blob/master/docker-compose.yaml)
 
-## Lazytainer - Stop Minecraft container based on traffic
-Monitors network traffic to the Minecraft containers. If there is traffic, the container runs, otherwise the container is stopped/paused.
+## Lazytainer - 根据流量停止Minecraft容器
 
-By using [Lazytainer](https://github.com/vmorganp/Lazytainer) with the [docker-minecraft-server](https://github.com/itzg/docker-minecraft-server) a somehow similar behaviour to [Lazymc](https://github.com/timvisee/lazymc) can be archived.
+监控Minecraft容器的网络流量。如果有流量，容器运行，否则容器停止/暂停。
+
+通过将[Lazytainer](https://github.com/vmorganp/Lazytainer)与[docker-minecraft-server](https://github.com/itzg/docker-minecraft-server)一起使用，可以实现与[Lazymc](https://github.com/timvisee/lazymc)类似的行为。
 
 ```yaml
 services:
@@ -113,4 +110,4 @@ services:
     stdin_open: true
     restart: unless-stopped
 ```
-[Source](https://github.com/itzg/docker-minecraft-server/blob/master/examples/lazytainer/docker-compose.yml)
+[来源](https://github.com/itzg/docker-minecraft-server/blob/master/examples/lazytainer/docker-compose.yml)

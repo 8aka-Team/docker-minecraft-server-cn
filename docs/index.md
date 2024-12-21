@@ -7,15 +7,15 @@
 
 在这种情况下，标准服务器端口 25565 将在你的主机上暴露 。
 
-!!! note
+!!! note "注意"
 
     如果你计划运行一个长期的服务器，强烈建议使用管理层，如 [Docker Compose](#使用-docker-compose) 或 [Kubernetes](#部署模板和示例)，以允许增量重新配置和镜像升级。
 
-!!! info
+!!! info "信息"
 
     请务必始终在你的命令和容器定义中包含 `-e EULA=TRUE`，因为 Mojang/Microsoft 要求接受 EULA。
 
-!!! 警告
+!!! warning "警告"
 
     **不要** 在 25575 端口上转发 RCON，除非你首先将 `RCON_PASSWORD` 设置为安全值。强烈建议仅在容器内使用 RCON，例如使用 `rcon-cli`。
 

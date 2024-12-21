@@ -1,19 +1,18 @@
-# Auto-download using Spiget
+# 使用Spiget自动下载
 
-The `SPIGET_RESOURCES` variable can be set with a comma-separated list of SpigotMC resource IDs to automatically download [Spigot/Bukkit/Paper plugins](https://www.spigotmc.org/resources/) using [the spiget API](https://spiget.org/). Resources that are zip files will be expanded into the plugins directory and resources that are simply jar files will be moved there.
+`SPIGET_RESOURCES`变量可以设置为一个以逗号分隔的SpigotMC资源ID列表，以使用[Spiget API](https://spiget.org/)自动下载[Spigot/Bukkit/Paper插件](https://www.spigotmc.org/resources/)。如果是zip文件的资源将被解压到插件目录，而仅仅是jar文件的资源将被移动到该目录。
 
-!!! important "SPIGET not SPIGOT"
-    The variable is purposely spelled SPIG**E**T with an "E"
+!!! important "是SPIGET不是SPIGOT"
+    该变量故意拼写为SPIG**E**T，带有一个"E"
 
-The **resource ID** can be located from the numerical part of the URL after the shortname/slug and a dot. For example, the ID is **28140** from
+**资源ID**可以从URL中短名称/slug之后的数字部分找到。例如，从以下URL中，ID是**28140**：
 
     https://www.spigotmc.org/resources/luckperms.28140/
                                                  =====
 
-For example, the following will auto-download the [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) and [Vault](https://www.spigotmc.org/resources/vault.34315/) plugins:
+例如，以下命令将自动下载[LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/)和[Vault](https://www.spigotmc.org/resources/vault.34315/)插件：
 
     -e SPIGET_RESOURCES=28140,34315
 
-!!! note
-    Some plugins, such as EssentialsX (resource ID 9089), do not permit automated downloads via Spiget. Instead, you will need to pre-download the desired file and supply it to the container, such as using the `/plugins` mount point, described [in the main section](index.md).
-
+!!! note "注意"
+    一些插件，例如EssentialsX(资源ID 9089)，不允许通过Spiget进行自动下载。相反，你需要预先下载所需的文件并将其提供给容器，例如使用`/plugins`挂载点，如[主节](index.md)中所述。

@@ -1,30 +1,31 @@
-# Auto-Stop
+# 自动停止
 
-An option to stop the server after a specified time has been added for niche applications (e.g. billing saving on AWS Fargate). The function is incompatible with the Autopause functionality, as they basically cancel out each other.
+为特定应用(例如在AWS Fargate上节省计费)添加了一个选项，可以在指定时间后停止服务器。该功能与自动暂停功能不兼容，因为它们基本上会相互抵消。
 
-!!! note
+!!! note "注意"
 
-    the docker container variables have to be set accordingly (restart policy set to "no") and that the container has to be manually restarted.
+    Docker容器变量必须相应设置(重启策略设置为“no”)，并且容器必须手动重启。
 
-A `.skip-stop` file can be created in the `/data` directory to make the server skip autostopping, for as long as the file is present. The autostop timer will also be reset.
+可以在`/data`目录中创建一个`.skip-stop`文件，使服务器跳过自动停止，只要该文件存在。自动停止计时器也将重置。
 
-A starting, example compose file has been provided in [examples/docker-compose-autostop.yml](https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-autostop.yml).
+在[examples/docker-compose-autostop.yml](https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-autostop.yml)中提供了一个示例的compose文件。
 
-Enable the Autostop functionality by setting:
+通过设置以下内容启用自动停止功能：
 
 ```
 -e ENABLE_AUTOSTOP=TRUE
 ```
 
-The following environment variables define the behavior of auto-stopping:
-* `AUTOSTOP_TIMEOUT_EST`, default `3600` (seconds)
-  describes the time between the last client disconnect and the stopping of the server (read as timeout established)
-* `AUTOSTOP_TIMEOUT_INIT`, default `1800` (seconds)
-  describes the time between server start and the stopping of the server, when no client connects in-between (read as timeout initialized)
-* `AUTOSTOP_PERIOD`, default `10` (seconds)
-  describes period of the daemonized state machine, that handles the stopping of the server
+以下环境变量定义了自动停止的行为：
+* `AUTOSTOP_TIMEOUT_EST`，默认`3600`(秒)
+  描述最后一个客户端断开连接与服务器停止之间的时间(读作已建立的超时)
+* `AUTOSTOP_TIMEOUT_INIT`，默认`1800`(秒)
+  描述服务器启动与服务器停止之间的时间，当在此期间没有客户端连接时(读作初始化的超时)
+* `AUTOSTOP_PERIOD`，默认`10`(秒)
+  描述处理服务器停止的守护进程状态机的周期
 
-> To troubleshoot, add `DEBUG_AUTOSTOP=true` to see additional output
+> 要进行故障排除，请添加`DEBUG_AUTOSTOP=true`以查看额外输出
 
-## Proxy Support
-If you make use of PROXY Protocol, i.e. through something like HAProxy or Fly.io, you will need to enable it in your variety of server's configuration, and then set the `USES_PROXY_PROTOCOL` envar to `true`. This lets Autostop monitor the server, where it otherwise wouldn't
+## 代理支持
+
+如果您使用PROXY协议，例如通过HAProxy或Fly.io，您需要在服务器的各种配置中启用它，然后将`USES_PROXY_PROTOCOL`环境变量设置为`true`。这使得自动停止可以监控服务器，否则它无法监控。

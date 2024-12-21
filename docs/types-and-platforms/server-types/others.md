@@ -35,7 +35,7 @@ Configuration options with defaults:
 - `LIMBO_SCHEMA_FILENAME`=default.schem
 - `LEVEL`="Default;${LIMBO_SCHEMA_NAME}"
 
-!!! note
+!!! note "注意"
 
     Instead of using format codes in the MOTD, Limbo requires [JSON chat content](https://minecraft.wiki/w/Raw_JSON_text_format#Java_Edition). If a plain string is provided, which is the default, then it gets converted into the required JSON structure. 
 
@@ -61,7 +61,7 @@ Alternatively, the final `-jar` invocation can be replaced by setting `CUSTOM_JA
 -cp worldedit.jar:Carpet-Server.jar net.minecraft.server.MinecraftServer
 ```
 
-!!! note
+!!! note "注意"
 
     When using `docker run` make sure to quote the entire value since it has spaces in it, such as
 

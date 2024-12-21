@@ -1,11 +1,11 @@
 # Feed the Beast
 
-!!! note
+!!! note "注意"
     Requires one of the Ubuntu with Hotspot images listed in [the Java versions section](../../versions/java.md).
 
 [Feed the Beast application](https://www.feed-the-beast.com/) modpacks are supported by setting `MODPACK_PLATFORM`, `MOD_PLATFORM` or `TYPE` to "FTBA"
 
-!!! note
+!!! note "注意"
     The "A" at the end of "FTBA" is important. The value "FTB" used to be an alias for "CURSEFORGE".
 
 This mod platform type will automatically take care of downloading and installing the modpack and appropriate version of Forge, so the `VERSION` does not need to be specified.
@@ -36,6 +36,6 @@ docker run -d --name mc-ftb -e EULA=TRUE \
   itzg/minecraft-server:java8-multiarch
 ```
 
-!!! note
+!!! note "注意"
 
     Normally you will also add `-v` volume for `/data` since the mods and config are installed there along with world data.
