@@ -77,7 +77,7 @@
 
 ## 版本兼容性
 
-[NitWikit 中的这一部分](https://nitwikit.yizhan.wiki/preparation/choose-and-download-and-install-java/) 列出了 Minecraft 版本及其所需的相应 Java 版本。
+[NitWikit 中的这一部分](https://nitwikit.8aka.org/preparation/choose-and-download-and-install-java/) 列出了 Minecraft 版本及其所需的相应 Java 版本。
 
 ### 类文件版本 65.0
 
