@@ -108,4 +108,6 @@ nav:
     - 类型与平台: /types-and-platforms/
     - 版本: /versions/
     - 基岩版: bedrock.md
+extra_javascript:
+  - javascripts/ad.js
 
